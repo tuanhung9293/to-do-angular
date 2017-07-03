@@ -1,6 +1,8 @@
 <div class="col-md-6 col-md-offset-3">
-    <h1>Hi!</h1>
-    <p>You're logged in with Angular 2!!</p>
-
-    <p><a [routerLink]="['/login']">Logout</a></p>
+  <h3>ADMIN</h3>
+  <nav>
+    <a routerLink="/tasklist" routerLinkActive="active">Manage</a>
+    <a routerLink="/profile" routerLinkActive="active">Profile</a>
+  </nav>
+  <router-outlet></router-outlet>
 </div>
