@@ -1,21 +1,9 @@
-<div class="col-md-6 col-md-offset-3">
-  <a *ngFor="let tasklist of tasklists" class="col-1-4">
+<div class="col-md-12">
+  <a *ngFor="let tasklist of tasklists">
     <div>
       <h4>{{tasklist.name}}</h4>
     </div>
   </a>
-
-  <!--<form name="form" (ngSubmit)="addTasklist()" #f="ngForm" novalidate>-->
-    <!--<div class="form-group">-->
-      <!--<label for="name">Name</label>-->
-      <!--<input type="name" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel"-->
-             <!--required/>-->
-      <!--</div>-->
-    <!--<div class="form-group">-->
-      <!--<button [disabled]="loading" class="btn btn-primary">Add</button>-->
-     <!--</div>-->
-  <!--</form>-->
-
 
   <div>
     <label>Tasklist name:</label> <input #tasklistName />
@@ -30,5 +18,53 @@
       getAll
     </button>
   </div>
+
+
+
+
+  <div class="block">
+    <div class="block-header">
+      <h3 class="block-title">Borderless Table</h3>
+    </div>
+    <div class="block-content">
+      <table class="table table-hover table-borderless">
+        <thead>
+        <tr>
+          <th class="text-center" style="width: 10%;">#</th>
+          <th class="text-center" style="width: 20%;">List Name</th>
+          <th class="text-center" style="width: 10%;">User</th>
+          <th class="text-center" style="width: 10%;">Shares</th>
+          <th class="text-center" style="width: 10%;">Todo count</th>
+          <th class="text-center" style="width: 10%;">No. done</th>
+          <th class="text-center" style="width: 10%;">Detail</th>
+          <th class="text-center" style="width: 20%;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="text-center">1</td>
+          <td class="text-center">Amber Walker</td>
+          <td class="text-center">4</td>
+          <td class="text-center">4</td>
+          <td class="text-center">4</td>
+          <td class="text-center">4</td>
+          <td class="text-center">
+            <button class="label label-info" type="button" data-toggle="tooltip" title="Show Detail">Show</button>
+          </td>
+          <td class="text-center">
+            <div class="btn-group">
+              <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Share Tasklist"><i class="glyphicon glyphicon-share-alt"></i></button>
+              <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Tasklist"><i class="glyphicon glyphicon-pencil"></i></button>
+              <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Tasklist"><i class="glyphicon glyphicon-remove"></i></button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
 
 </div>

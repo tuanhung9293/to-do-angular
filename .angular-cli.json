@@ -19,9 +19,16 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "jquery.dataTables.min.css",
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "jquery.min.js",
+        "bootstrap.min.js",
+        "jquery.dataTables.min.js",
+        "base_tables_datatables.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

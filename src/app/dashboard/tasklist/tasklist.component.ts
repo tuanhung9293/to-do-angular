@@ -10,7 +10,7 @@ const TASKLISTS: Tasklist[] = [
 
 @Component({
   selector: 'app-tasklist',
-  templateUrl: './tasklist.component.html'
+  templateUrl: './tasklist2.component.html'
 })
 export class TasklistComponent {
   tasklists = TASKLISTS;
