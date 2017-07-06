@@ -2,28 +2,13 @@ import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import {User} from '../_models';
-import {ChangePassword} from '../_models';
 import {toPromise} from 'rxjs/operator/toPromise';
-import {Tasklist} from '../_models/tasklist';
+import {Tasklist} from '../_models';
+import {Todo} from '../_models';
 
 @Injectable()
-export class UserService {
+export class TasklistService {
   constructor(private http: Http) {
-  }
-
-  create(user: User): Promise<User> {
-    return this.http.post('https://angular-task-list.herokuapp.com/auth', user)
-      .toPromise()
-      .then(response => response.json() as User)
-      .catch(this.handleError);
-  }
-
-  changePassword(changepassword: ChangePassword): Promise<ChangePassword> {
-    return this.http.put('https://angular-task-list.herokuapp.com/auth/password', changepassword, this.jwt())
-      .toPromise()
-      .then(response => response.json() as ChangePassword)
-      .catch(this.handleError);
   }
 
   getTasklists(): Promise<any> {
@@ -51,16 +36,30 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  updateTasklist(tasklist_id: number, tasklist_name: string): Promise<any> {
+    return this.http.put(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}`, {name: tasklist_name}, this.jwt())
+      .toPromise()
+      .then(response => console.log(response))
+      .catch(this.handleError);
+  }
 
-  getTodos(id: number): Promise<any> {
-    return this.http.get(`https://angular-task-list.herokuapp.com/task_lists/${id}/todos/`, this.jwt())
+  getTodos(tasklist_id: number): Promise<any> {
+    return this.http.get(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/todos/`, this.jwt())
+      .toPromise()
+      .then(response => response.json() as Todo[])
+      .catch(this.handleError);
+  }
+
+  addTodo(tasklist_id: number, name: string): Promise<any> {
+    return this.http.post(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/todos/`, {name: name}, this.jwt()
+    )
       .toPromise()
       .then(response => console.log(response))
       .catch(this.handleError);
   }
 
   updateTodo(tasklist_id: number, todo_id: number): Promise<any> {
-    return this.http.put(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/todos/${todo_id}`, this.jwt())
+    return this.http.put(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/todos/${todo_id}`, {done: true}, this.jwt())
       .toPromise()
       .then(response => console.log(response))
       .catch(this.handleError);

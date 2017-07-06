@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-lg-6">
+    <h2>TODOS</h2>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Type in a new todo..." [(ngModel)]="newtodo" name="newTodo" >
+      <span class="input-group-btn">
+            <button class="btn btn-default"
+                    type="submit" [disabled]="newtodo===''"
+                    (click)="addTodo(newtodo); newtodo=''">Add Todo </button>
+          </span>
+    </div>
+
+    <div [hidden]="newtodo">
+    </div>
+
+    <div [hidden]="!newtodo">
+      Typing: {{ newtodo }}
+    </div>
+
+    <div>
+      <div *ngFor="let todo of todos">
+        <div *ngIf="!todo.done">
+          <span >{{ todo.name }}</span>
+          <span (click)="doneTodo(todo.id)">[X]</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button (click)="doneAllTodos()" class="btn btn-info">Mark all as Done</button>
+    </div>
+  </div><!-- /.col-lg-6 -->
+  <div class="col-lg-6">
+    <h2>DONE</h2>
+    <div>
+      <div *ngFor="let todo of todos">
+        <div *ngIf="todo.done">
+          <span >{{todo.name}}</span>
+          <span (click)="deleteDone(todo.id)">[X]</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button (click)="deleteAllDones()" class="btn btn-danger">Delete all Done</button>
+    </div>
+
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->

@@ -7,7 +7,7 @@ import {DashboardComponent} from './dashboard.component';
 import {TasklistComponent} from './tasklist';
 import {ProfileComponent} from './profile';
 import {DataFilterPipe} from './tasklist/data-silter.pipe';
-
+import {TodosComponent} from './tasklist/todo';
 
 import {DataTableModule} from 'angular2-datatable';
 
@@ -26,7 +26,8 @@ import {DashboardRoutingModule} from './dashboard-routing.module';
     DashboardComponent,
     TasklistComponent,
     ProfileComponent,
-    DataFilterPipe
+    DataFilterPipe,
+    TodosComponent
   ],
   providers: [AuthGuard]
 })
