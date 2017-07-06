@@ -13,6 +13,7 @@ import {DataTableModule} from 'angular2-datatable';
 
 import {AuthGuard} from '../_guards/index';
 import {DashboardRoutingModule} from './dashboard-routing.module';
+import {TasklistService} from '../_services';
 
 @NgModule({
   imports: [
@@ -29,7 +30,10 @@ import {DashboardRoutingModule} from './dashboard-routing.module';
     DataFilterPipe,
     TodosComponent
   ],
-  providers: [AuthGuard]
+  providers: [
+    AuthGuard,
+    TasklistService
+  ]
 })
 export class DashboardModule {
 }

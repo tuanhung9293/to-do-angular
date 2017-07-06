@@ -11,7 +11,7 @@ import {AlertService, UserService, AuthenticationService} from './_services';
 import {LoginComponent} from './login/index';
 import {RegisterComponent} from './register/index';
 import {AppComponent} from './app.component';
-import {TasklistService} from './_services';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +28,6 @@ import {TasklistService} from './_services';
   providers: [
     AlertService,
     UserService,
-    TasklistService,
     AuthenticationService,
     AuthGuard
   ],
