@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-import {Tasklist} from '../../_models';
+import {Tasklist, Authen} from '../../_models';
 import {TasklistService} from '../../_services';
 
 @Component({
@@ -10,6 +10,7 @@ import {TasklistService} from '../../_services';
 })
 export class TasklistComponent implements OnInit {
   data: Tasklist[];
+
   public filterQuery = '';
   public rowsOnPage = 10;
   public sortBy = 'email';
@@ -24,6 +25,34 @@ export class TasklistComponent implements OnInit {
         data => {
           this.data = data;
           console.log('Get tasklists success');
+        })
+      .then(() => {
+        for (let i = 0; i < this.data.length; i++) {
+          this.get_users_authed_each_Tasklist(this.data[i].id, i)
+        }
+      })
+      .then(() => {
+          this.get_authen_Tasklist();
+        }
+      )
+  }
+
+  get_authen_Tasklist() {
+    this.tasklistService.get_authen_Tasklist()
+      .then(
+        data => {
+          this.data = this.data.concat(data);
+          console.log('Get authen tasklists success');
+        })
+  }
+
+  get_users_authed_each_Tasklist(tasklist_id: number, data_id: number) {
+    this.tasklistService.get_users_authed_each_Tasklist(tasklist_id)
+      .then(
+        data => {
+          this.data[data_id].share = data.length;
+          this.data[data_id].authen_users = data;
+          console.log('Get who authed tasklists success');
         })
   }
 

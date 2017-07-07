@@ -26,52 +26,14 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  getTasklists(): Promise<any> {
-    return this.http.get('https://angular-task-list.herokuapp.com/task_lists', this.jwt())
+  getUsers(): Promise<any> {
+    return this.http.get('https://angular-task-list.herokuapp.com/users', this.jwt())
       .toPromise()
-      .then(response => response.json() as Tasklist)
-      .catch(this.handleError);
-  }
-
-  addTasklist(tasklistName: string): Promise<any> {
-    return this.http.post('https://angular-task-list.herokuapp.com/task_lists', {name: tasklistName}, this.jwt())
-      .toPromise()
-      .then(response => {
-        console.log('create tasklist success in service')
-      })
-      .catch(this.handleError);
-  }
-
-  deleteTasklist(id: number): Promise<any> {
-    return this.http.delete(`https://angular-task-list.herokuapp.com/task_lists/${id}/`, this.jwt())
-      .toPromise()
-      .then(response => {
-        console.log(`delete tasklist ${id} success in service`)
-      })
+      .then(response => response.json() as User[])
       .catch(this.handleError);
   }
 
 
-  getTodos(id: number): Promise<any> {
-    return this.http.get(`https://angular-task-list.herokuapp.com/task_lists/${id}/todos/`, this.jwt())
-      .toPromise()
-      .then(response => console.log(response))
-      .catch(this.handleError);
-  }
-
-  updateTodo(tasklist_id: number, todo_id: number): Promise<any> {
-    return this.http.put(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/todos/${todo_id}`, this.jwt())
-      .toPromise()
-      .then(response => console.log(response))
-      .catch(this.handleError);
-  }
-
-  deleteTodo(tasklist_id: number, todo_id: number): Promise<any> {
-    return this.http.delete(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/todos/${todo_id}`, this.jwt())
-      .toPromise()
-      .then(response => console.log(response))
-      .catch(this.handleError);
-  }
 
   private jwt() {
     // create authorization header with jwt token

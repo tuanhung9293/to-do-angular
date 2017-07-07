@@ -8,12 +8,14 @@ import {TasklistComponent} from './tasklist';
 import {ProfileComponent} from './profile';
 import {DataFilterPipe} from './tasklist/data-silter.pipe';
 import {TodosComponent} from './tasklist/todo';
+import {AuthenComponent} from './tasklist/authentication';
 
 import {DataTableModule} from 'angular2-datatable';
 
 import {AuthGuard} from '../_guards/index';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {TasklistService} from '../_services';
+import {UserService} from '../_services';
 
 @NgModule({
   imports: [
@@ -28,11 +30,13 @@ import {TasklistService} from '../_services';
     TasklistComponent,
     ProfileComponent,
     DataFilterPipe,
-    TodosComponent
+    TodosComponent,
+    AuthenComponent
   ],
   providers: [
     AuthGuard,
-    TasklistService
+    TasklistService,
+    UserService
   ]
 })
 export class DashboardModule {

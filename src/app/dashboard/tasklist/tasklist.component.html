@@ -51,7 +51,8 @@
             <button (click)="deleteTasklist(item.id)" class="btn btn-xs btn-default" type="button" data-toggle="modal"
                     data-target="collapse" title="Remove Tasklist"><i
               class="glyphicon glyphicon-remove"></i></button>
-            <button class="btn btn-xs btn-default" type="button" data-toggle="modal" attr.data-target="#share{{item.id}}"
+            <button class="btn btn-xs btn-default" type="button" data-toggle="modal"
+                    attr.data-target="#share{{item.id}}"
                     title="Share Tasklist"><i
               class="glyphicon glyphicon-share-alt"></i></button>
             <button class="btn btn-xs btn-default" type="button" data-toggle="modal" attr.data-target="#open{{item.id}}"
@@ -72,14 +73,16 @@
               <div class="modal-body">
                 <div>
                   <label>name: </label>
-                  <input [(ngModel)]="item.name" placeholder="name" />
+                  <input [(ngModel)]="item.name" placeholder="name"/>
                 </div>
               </div>
               <div class="modal-footer">
                 <button (click)="getTasklists()"
-                        type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        type="button" class="btn btn-danger" data-dismiss="modal">Cancel
+                </button>
                 <button (click)="updateTasklist(item.id, item.name)"
-                        type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                        type="button" class="btn btn-primary" data-dismiss="modal">Save
+                </button>
               </div>
             </div>
           </div>
@@ -96,18 +99,19 @@
                 <h4 class="modal-title">Edit tasklist <strong>{{item.name}}</strong></h4>
               </div>
               <div class="modal-body">
-               share
+                <app-authen [tasklist_id]="item.id" [authen_users]="item.authen_users"></app-authen>
               </div>
               <div class="modal-footer">
                 <button (click)="getTasklists()"
-                        type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        type="button" class="btn btn-danger" data-dismiss="modal">Cancel
+                </button>
                 <button (click)="updateTasklist(item.id, item.name)"
-                        type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+                        type="button" class="btn btn-primary" data-dismiss="modal">Save
+                </button>
               </div>
             </div>
           </div>
         </div>
-
 
 
         <!-- Modal Open -->
