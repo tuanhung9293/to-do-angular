@@ -76,6 +76,7 @@ export class TasklistService {
   updateTasklist(tasklist_id: number, tasklist_name: string): Promise<any> {
     return this.http.put(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}`, {name: tasklist_name}, this.jwt())
       .toPromise()
+      .then((response) => response.json() as Tasklist)
       .catch(this.handleError);
   }
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-import {Tasklist, Authen} from '../../_models';
+import {Tasklist, User} from '../../_models';
 import {TasklistService, UserService} from '../../_services';
 
 @Component({
@@ -10,14 +10,22 @@ import {TasklistService, UserService} from '../../_services';
 })
 export class TasklistComponent implements OnInit {
   data: Tasklist[];
+  users: User[];
 
   public filterQuery = '';
   public rowsOnPage = 10;
-  public sortBy = 'email';
+  public sortBy = 'id';
   public sortOrder = 'asc';
 
   constructor(private tasklistService: TasklistService,
               private userService: UserService) {
+  }
+
+  getUsers() {
+    this.userService.getUsers()
+      .then((data) => {
+        this.users = data;
+      })
   }
 
   getTasklists() {
@@ -32,9 +40,9 @@ export class TasklistComponent implements OnInit {
           console.log('Get tasklists success');
         })
       .then(() => {
-        for (let i = 0; i < this.data.length; i++) {
-          this.get_users_authed_each_Tasklist(this.data[i].id, i)
-        }
+        this.data.forEach((item, index) => {
+          this.get_users_authed_each_Tasklist(item.id, index)
+        })
       })
       .then(() => {
           this.get_authen_Tasklist();
@@ -46,6 +54,9 @@ export class TasklistComponent implements OnInit {
     this.tasklistService.get_authen_Tasklist()
       .then(
         data => {
+          data.forEach((item) => {
+            item.user = this.users.filter(h => h.id === item.user_id)[0].email;
+          });
           this.data = this.data.concat(data);
           console.log('Get authen tasklists success');
         })
@@ -63,6 +74,7 @@ export class TasklistComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTasklists();
+    this.getUsers();
   }
 
   deleteTasklist(id: number): void {
@@ -76,18 +88,17 @@ export class TasklistComponent implements OnInit {
     this.tasklistService.addTasklist(tasklistName)
       .then((response) => {
           this.getTasklists();
-          // this.data.push(response);
           console.log('Create tasklist success');
         }
       )
   }
 
-  updateTasklist(id: number, tasklist_name: string): void {
-    this.tasklistService.updateTasklist(id, tasklist_name)
-      .then(() => {
-        console.log('Rename tasklist success');
-        this.getTasklists();
-      });
+  updateTasklist(tasklist_id: number, tasklist_name: string): void {
+    this.tasklistService.updateTasklist(tasklist_id, tasklist_name)
+      .then(() => console.log('Rename tasklist success'))
+      .catch(() => {
+        this.data.filter(h => h.id === tasklist_id)[0].name = 'tasklistName';
+      })
   }
 
 }
