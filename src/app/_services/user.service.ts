@@ -6,6 +6,7 @@ import {User} from '../_models';
 import {ChangePassword} from '../_models';
 import {toPromise} from 'rxjs/operator/toPromise';
 import {Tasklist} from '../_models/tasklist';
+import {current} from "codelyzer/util/syntaxKind";
 
 @Injectable()
 export class UserService {
@@ -33,7 +34,14 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  getCurrentUser() {
+    return this.current_user();
+  }
 
+  private current_user() {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser.headers['Uid'];
+  }
 
   private jwt() {
     // create authorization header with jwt token

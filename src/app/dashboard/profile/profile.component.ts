@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AlertService, UserService} from '../../_services';
@@ -7,12 +7,21 @@ import {AlertService, UserService} from '../../_services';
   selector: 'app-profile',
   templateUrl: './profile.component.html'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit{
   model: any = {};
+  current_user: string;
 
   constructor(private userService: UserService,
               private router: Router,
               private alertService: AlertService) {
+  }
+
+  ngOnInit(): void {
+    this.getCurrentUser();
+  }
+
+  getCurrentUser() {
+    this.current_user = this.userService.getCurrentUser();
   }
 
   changePassword() {

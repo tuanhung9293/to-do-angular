@@ -7,7 +7,7 @@ import {AlertService, AuthenticationService} from '../_services/index';
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   model: any = {};
   loading = false;
   returnUrl: string;

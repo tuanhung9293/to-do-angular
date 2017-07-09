@@ -7,4 +7,5 @@ export class Tasklist {
     count: number;
     done: number;
     authen_users: Authen[];
+    owner: boolean;
 }

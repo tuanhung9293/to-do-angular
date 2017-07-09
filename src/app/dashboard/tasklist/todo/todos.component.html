@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-lg-6">
-    <h2>TODOS</h2>
+  <div class="col-sm-6">
+    <h3>TODOS</h3>
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Type in a new todo..." [(ngModel)]="newtodo" name="newTodo" >
+      <input type="text" class="form-control" placeholder="Type in a new todo..." [(ngModel)]="newtodo" name="newTodo">
       <span class="input-group-btn">
             <button class="btn btn-default"
                     type="submit" [disabled]="newtodo===''"
@@ -16,31 +16,40 @@
     <div [hidden]="!newtodo">
       Typing: {{ newtodo }}
     </div>
-
+    <br>
     <div>
       <div *ngFor="let todo of todos">
         <div *ngIf="!todo.done">
-          <span >{{ todo.name }}</span>
-          <span (click)="doneTodo(todo.id)">[X]</span>
+          <span class="label label-info" style="cursor:pointer"
+                (click)="doneTodo(todo.id)"
+                onmouseover="this.style.backgroundColor='#333'"
+                onmouseout="this.style.backgroundColor=''">Done
+          </span>
+          <span>&nbsp;{{ todo.name }}</span>
         </div>
       </div>
     </div>
-
+    <br>
     <div>
-      <button (click)="doneAllTodos()" class="btn btn-info">Mark all as Done</button>
+      <button (click)="doneAllTodos()" class="btn btn-primary">Mark all as Done</button>
     </div>
   </div><!-- /.col-lg-6 -->
-  <div class="col-lg-6">
-    <h2>DONE</h2>
+  <!--<hr class="hidden-sm-up">-->
+  <div class="col-sm-6">
+    <h3>DONE</h3>
     <div>
       <div *ngFor="let todo of todos">
         <div *ngIf="todo.done">
-          <span >{{todo.name}}</span>
-          <span (click)="deleteDone(todo.id)">[X]</span>
+           <span class="label label-warning" style="cursor:pointer"
+                 (click)="deleteDone(todo.id)"
+                 onmouseover="this.style.backgroundColor='#333'"
+                 onmouseout="this.style.backgroundColor=''">Delete
+          </span>
+          <span>&nbsp;{{todo.name}}</span>
         </div>
       </div>
     </div>
-
+    <br>
     <div>
       <button (click)="deleteAllDones()" class="btn btn-danger">Delete all Done</button>
     </div>

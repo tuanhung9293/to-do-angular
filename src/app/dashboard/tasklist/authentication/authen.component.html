@@ -1,31 +1,35 @@
 <div class="row">
-  <div class="col-xs-6">
-    <div class="button-group">
+  <div class="col-xs-12">
+
+    <div class="button-group" style="display:inline-block">
       <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
         Share All Actions <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>
       <ul class="dropdown-menu">
-        <li *ngFor="let user of users" >
+        <li *ngFor="let user of users | orderBy: 'email': false" style="cursor:pointer"
+            onmouseover="this.style.color='blue'" onmouseout="this.style.color=''"
+        >
           <div (click)="createAuthenTasklist(user.id)">
-            {{user.id}}&nbsp;&nbsp;&nbsp;{{user.email}}
+            &nbsp;{{user.email}}&nbsp;
           </div>
         </li>
       </ul>
     </div>
 
-    <div *ngFor="let authen_user of authen_users">
-      <div (click)="deleteAuthenTasklist(authen_user.user_id)">{{authen_user.user_id}}</div>
-    </div>
-
-  </div>
-
-  <div class="col-xs-6">
-    <div class="button-group">
-      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-        Share Read Only <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li *ngFor="let user of users"><a href="#" class="small" attr.value="{{user.id}}" tabIndex="-1"><input
-          type="checkbox"/>&nbsp;{{user.email}}</a></li>
-      </ul>
+    <div *ngFor="let authen_user of authen_users | orderBy: 'is_write': true" style="display:inline-block">
+      <div>
+        <span class="label" style="cursor:pointer"
+              [ngClass]="authen_user.is_write == true ? 'label-success' : 'label-default'"
+              (click)="updateAuthenTasklist(authen_user.user_id)"
+              onmouseover="this.style.backgroundColor='#ddd'"
+              onmouseout="this.style.backgroundColor=''">Write
+        </span>
+        <div (click)="deleteAuthenTasklist(authen_user.user_id)"
+             style="display:inline-block; cursor:pointer" onmouseover="this.style.color='#ddd'"
+             onmouseout="this.style.color=''"
+             [ngClass]="authen_user.is_write == true ? 'text-primary' : 'text-muted'">&nbsp;{{authen_user.user_email}}
+        </div>
+        <span>&nbsp;|&nbsp;</span>
+      </div>
     </div>
   </div>
 

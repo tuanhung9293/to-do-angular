@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {Tasklist, Authen} from '../../_models';
-import {TasklistService} from '../../_services';
+import {TasklistService, UserService} from '../../_services';
 
 @Component({
   selector: 'app-tasklist',
@@ -16,7 +16,8 @@ export class TasklistComponent implements OnInit {
   public sortBy = 'email';
   public sortOrder = 'asc';
 
-  constructor(private tasklistService: TasklistService) {
+  constructor(private tasklistService: TasklistService,
+              private userService: UserService) {
   }
 
   getTasklists() {
@@ -24,6 +25,10 @@ export class TasklistComponent implements OnInit {
       .then(
         data => {
           this.data = data;
+          this.data.forEach((item) => {
+            item.owner = true;
+            item.user = this.userService.getCurrentUser();
+          });
           console.log('Get tasklists success');
         })
       .then(() => {

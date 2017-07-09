@@ -22,68 +22,55 @@ export class AuthenComponent implements OnInit {
       .then(
         data => {
           this.users = data;
-          console.log(this.users);
           console.log('Get users success');
-          console.log(`data authen_users: ${JSON.stringify(this.authen_users)}`);
         })
+      .then(() => {
+          if (this.authen_users) {
+            this.authen_users.forEach((item) => {
+              item.user_email = this.users.filter(h => h.id === item.user_id)[0].email;
+              this.users = this.users.filter(h => h.id !== item.user_id);
+            })
+          }
+        }
+      )
   }
 
   createAuthenTasklist(user_id: number) {
     this.tasklistService.createAuthenTasklist(this.tasklist_id, user_id)
       .then(
         data => {
-          this.users = data;
+          this.authen_users.push(data);
+          let email = this.users.filter(h => h.id === data.user_id)[0].email
+          this.authen_users[this.authen_users.length - 1].user_email = email;
           console.log(`Create Authen users success`);
         })
+      .then(() => {
+        this.users = this.users.filter(h => h.id !== user_id);
+      })
   }
 
   deleteAuthenTasklist(user_id: number) {
     this.tasklistService.deleteAuthenTasklist(this.tasklist_id, user_id)
       .then(
         data => {
-          this.users = data;
+          let email = this.authen_users.filter(h => h.user_id === user_id)[0].user_email;
+          this.users.push({id: user_id, email: email, password: ''});
+          this.authen_users = this.authen_users.filter(h => h.user_id !== user_id);
           console.log(`Delete Authen users success`);
+        })
+  }
+
+  updateAuthenTasklist(user_id: number) {
+    let authen_user = this.authen_users.filter(h => h.user_id === user_id)[0];
+    this.tasklistService.updateAuthenTasklist(this.tasklist_id, user_id, !authen_user.is_write)
+      .then(
+        data => {
+          authen_user.is_write = data.is_write;
+          console.log(`Update Authen users ${user_id} is write ${authen_user.is_write} success`);
         })
   }
 
   ngOnInit(): void {
     this.getUsers();
   }
-
-//
-// getTodos(tasklist_id: number) {
-//   this.tasklistService.getTodos(this.tasklist_id)
-//     .then(
-//       data => {
-//         this.todos = data;
-//         console.log('Get todos success');
-//       })
-// }
-//
-// addTodo(newtodo: string) {
-//   this.tasklistService.addTodo(this.tasklist_id, newtodo)
-//     .then(() => {
-//         console.log(`Add todos ${newtodo} success`);
-//         this.getTodos(this.tasklist_id);
-//       }
-//     )
-// }
-//
-// doneTodo(todo_id: number) {
-//   this.tasklistService.updateTodo(this.tasklist_id, todo_id)
-//     .then(
-//       data => {
-//         console.log(`Done todo ${todo_id} success`);
-//         this.getTodos(this.tasklist_id);
-//       })
-// }
-//
-// deleteDone(todo_id: number) {
-//   this.tasklistService.deleteTodo(this.tasklist_id, todo_id)
-//     .then(
-//       data => {
-//         console.log(`Delete todo ${todo_id} success`);
-//         this.getTodos(this.tasklist_id);
-//       })
-// }
 }

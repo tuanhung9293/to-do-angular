@@ -11,6 +11,7 @@ import {TodosComponent} from './tasklist/todo';
 import {AuthenComponent} from './tasklist/authentication';
 
 import {DataTableModule} from 'angular2-datatable';
+import { Ng2OrderModule } from 'ng2-order-pipe';
 
 import {AuthGuard} from '../_guards/index';
 import {DashboardRoutingModule} from './dashboard-routing.module';
@@ -22,6 +23,7 @@ import {UserService} from '../_services';
     CommonModule,
     DashboardRoutingModule,
     DataTableModule,
+    Ng2OrderModule,
     FormsModule,
     HttpModule
   ],

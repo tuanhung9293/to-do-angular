@@ -1,12 +1,15 @@
 <div class="container-fluid">
   <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-    <label>Tasklist name:</label> <input #tasklistName/>
-    <button (click)="addTasklist(tasklistName.value); tasklistName.value=''">
-      Add
-    </button>
-    <br>
-    <span> Filter by name:</span>
-    <input class="form-control" [(ngModel)]="filterQuery"/>
+    <div class="row">
+      <div class="col-sm-6">
+        <label>Tasklist name: &nbsp;</label><input [(ngModel)]="tasklistName.value" #tasklistName required/>
+        <button (click)="addTasklist(tasklistName.value); tasklistName.value=''"
+                class="btn btn-primary btn-sm" [disabled]="tasklistName.value===''">Add</button>
+      </div>
+      <div class="col-sm-6">
+        <label>Filter by name: &nbsp;</label><input [(ngModel)]="filterQuery"/>
+      </div>
+    </div>
     <br>
     <table class="table table-bordered table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
            [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
@@ -44,7 +47,7 @@
         <td>{{item.count}}</td>
         <td>{{item.done}}</td>
         <td class="text-center">
-          <div class="btn-group">
+          <div *ngIf="item.owner" class="btn-group">
             <button class="btn btn-xs btn-default" type="button" data-toggle="modal" attr.data-target="#edit{{item.id}}"
                     title="Edit Tasklist"><i
               class="glyphicon glyphicon-pencil"></i></button>
@@ -59,10 +62,21 @@
                     title="Open Tasklist"><i
               class="glyphicon glyphicon-indent-left"></i></button>
           </div>
+
+          <div *ngIf="!item.owner">
+            <button class="btn btn-xs btn-info" type="button" data-toggle="modal" attr.data-target="#open{{item.id}}"
+                    title="Open Tasklist">Read Only
+            </button>
+          </div>
+
+          <!--<div *ngIf="false">-->
+          <!--<button class="btn btn-xs btn-primary" type="button" data-toggle="modal" attr.data-target="#open{{item.id}}"-->
+          <!--title="Open Tasklist">Show Detail</button>-->
+          <!--</div>-->
         </td>
 
         <!-- Modal Edit -->
-        <div class="modal fade" attr.id="edit{{item.id}}" role="dialog">
+        <div *ngIf="item.owner" class="modal fade" attr.id="edit{{item.id}}" role="dialog">
           <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -90,7 +104,7 @@
 
 
         <!-- Modal Share -->
-        <div class="modal fade" attr.id="share{{item.id}}" role="dialog">
+        <div *ngIf="item.owner" class="modal fade" attr.id="share{{item.id}}" role="dialog">
           <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -103,10 +117,7 @@
               </div>
               <div class="modal-footer">
                 <button (click)="getTasklists()"
-                        type="button" class="btn btn-danger" data-dismiss="modal">Cancel
-                </button>
-                <button (click)="updateTasklist(item.id, item.name)"
-                        type="button" class="btn btn-primary" data-dismiss="modal">Save
+                        type="button" class="btn btn-danger" data-dismiss="modal">Close
                 </button>
               </div>
             </div>
@@ -124,7 +135,7 @@
                 <h4 class="modal-title">Detail of tasklist <strong>{{item.name}}</strong></h4>
               </div>
               <div class="modal-body">
-                <app-todos [tasklist_id]="item.id"> Loading</app-todos>
+                <app-todos [tasklist]="item"> Loading</app-todos>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
