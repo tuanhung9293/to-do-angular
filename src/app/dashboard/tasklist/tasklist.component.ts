@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 
 import {Tasklist, User} from '../../_models';
 import {TasklistService, UserService} from '../../_services';
@@ -18,7 +18,8 @@ export class TasklistComponent implements OnInit {
   public sortOrder = 'asc';
 
   constructor(private tasklistService: TasklistService,
-              private userService: UserService) {
+              private userService: UserService,
+              private router: Router) {
   }
 
   getUsers() {
@@ -35,6 +36,7 @@ export class TasklistComponent implements OnInit {
           this.data = data;
           this.data.forEach((item) => {
             item.owner = true;
+            item.is_write = true;
             item.user = this.userService.getCurrentUser();
           });
           console.log('Get tasklists success');
@@ -103,5 +105,9 @@ export class TasklistComponent implements OnInit {
     this.tasklistService.getTasklist(tasklist_id)
       .then((data) => this.data.filter(h => h.id === tasklist_id)[0].name = data.name)
       .then(() => console.log(`Get tasklist ${tasklist_id} success`))
+  }
+
+  gotoDetail(tasklist_id: number): void {
+    this.router.navigate(['/detail', tasklist_id])
   }
 }

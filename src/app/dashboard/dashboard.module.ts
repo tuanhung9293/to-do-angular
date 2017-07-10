@@ -6,17 +6,19 @@ import { HttpModule } from '@angular/http';
 import {DashboardComponent} from './dashboard.component';
 import {TasklistComponent} from './tasklist';
 import {ProfileComponent} from './profile';
+import {SearchComponent} from './search';
+
 import {DataFilterPipe} from './tasklist/data-silter.pipe';
 import {TodosComponent} from './tasklist/todo';
 import {AuthenComponent} from './tasklist/authentication';
+import {TodoDetailComponent} from './tasklist/todoDetail';
 
 import {DataTableModule} from 'angular2-datatable';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 
 import {AuthGuard} from '../_guards/index';
 import {DashboardRoutingModule} from './dashboard-routing.module';
-import {TasklistService} from '../_services';
-import {UserService} from '../_services';
+import {TasklistService, UserService, SearchService} from '../_services';
 
 @NgModule({
   imports: [
@@ -33,12 +35,15 @@ import {UserService} from '../_services';
     ProfileComponent,
     DataFilterPipe,
     TodosComponent,
-    AuthenComponent
+    AuthenComponent,
+    SearchComponent,
+    TodoDetailComponent
   ],
   providers: [
     AuthGuard,
     TasklistService,
-    UserService
+    UserService,
+    SearchService
   ]
 })
 export class DashboardModule {

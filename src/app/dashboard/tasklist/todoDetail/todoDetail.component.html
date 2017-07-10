@@ -1,15 +1,15 @@
-<div class="modal fade" attr.id="open{{tasklist.id}}" role="dialog">
+<div class="modal show" attr.id="open{{tasklistDetail.id}}" role="dialog" *ngIf="tasklistDetail">
   <div class="modal-dialog modal-lg">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Detail of tasklist <strong>{{tasklist.name}}</strong></h4>
+        <h4 class="modal-title">Detail of tasklist <strong>{{tasklistDetail.name}}</strong></h4>
       </div>
       <div class="modal-body">
         <div class="row">
           <div class="col-sm-6">
             <h3>TODOS</h3>
-            <div class="input-group" *ngIf="tasklist.is_write">
+            <div class="input-group" *ngIf="tasklistDetail.is_write">
               <input type="text" class="form-control" placeholder="Type in a new todo..." [(ngModel)]="newtodo"
                      name="newTodo">
               <span class="input-group-btn">
@@ -31,7 +31,7 @@
                 <div *ngIf="!todo.done" style="margin: 1.5%">
                   <button class="btn btn-info btn-xs"
                           (click)="doneTodo(todo.id)"
-                          [disabled]="!tasklist.is_write">Done
+                          [disabled]="!tasklistDetail.is_write">Done
                   </button>
                   <span>&nbsp;{{ todo.name }}</span>
                 </div>
@@ -39,7 +39,7 @@
             </div>
             <br>
             <div>
-              <button (click)="doneAllTodos()" class="btn btn-primary btn-sm" [disabled]="!tasklist.is_write">Mark all
+              <button (click)="doneAllTodos()" class="btn btn-primary btn-sm" [disabled]="!tasklistDetail.is_write">Mark all
                 as Done
               </button>
             </div>
@@ -52,7 +52,7 @@
                 <div *ngIf="todo.done" style="margin: 1.5%">
                   <button class="btn btn-warning btn-xs"
                           (click)="deleteDone(todo.id)"
-                          [disabled]="!tasklist.is_write">Delete
+                          [disabled]="!tasklistDetail.is_write">Delete
                   </button>
                   <span>&nbsp;{{todo.name}}</span>
                 </div>
@@ -60,7 +60,7 @@
             </div>
             <br>
             <div>
-              <button (click)="deleteAllDones()" class="btn btn-danger btn-sm" [disabled]="!tasklist.is_write">Delete
+              <button (click)="deleteAllDones()" class="btn btn-danger btn-sm" [disabled]="!tasklistDetail.is_write">Delete
                 all Done
               </button>
             </div>
@@ -69,7 +69,7 @@
         </div><!-- /.row -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="goBack()">Back</button>
       </div>
     </div>
   </div>

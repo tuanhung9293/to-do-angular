@@ -1,13 +1,17 @@
 <div class="container-fluid">
   <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col-xs-4">
         <label>Tasklist name: &nbsp;</label><input [(ngModel)]="tasklistName.value" #tasklistName required/>
         <button (click)="addTasklist(tasklistName.value); tasklistName.value=''"
-                class="btn btn-primary btn-sm" [disabled]="tasklistName.value===''">Add</button>
+                class="btn btn-primary btn-sm" [disabled]="tasklistName.value===''">Add
+        </button>
       </div>
-      <div class="col-xs-6">
+      <div class="col-xs-4">
         <label>Filter by name: &nbsp;</label><input [(ngModel)]="filterQuery"/>
+      </div>
+      <div class="col-xs-4">
+        <app-search></app-search>
       </div>
     </div>
     <br>
@@ -59,20 +63,21 @@
                     title="Share Tasklist"><i
               class="glyphicon glyphicon-share-alt"></i></button>
             <button class="btn btn-xs btn-default" type="button" data-toggle="modal" attr.data-target="#open{{item.id}}"
-                    title="Open Tasklist"><i
-              class="glyphicon glyphicon-indent-left"></i></button>
+                    title="Open Tasklist">
+              <i class="glyphicon glyphicon-indent-left"></i></button>
           </div>
 
-          <div *ngIf="!item.owner">
-            <button class="btn btn-xs btn-info" type="button" data-toggle="modal" attr.data-target="#open{{item.id}}"
-                    title="Open Tasklist">Read Only
+          <div *ngIf="(!item.owner) && (!item.is_write)">
+            <button class="btn btn-xs btn-warning" type="button" data-toggle="modal" attr.data-target="#open{{item.id}}"
+                    title="Open Tasklist">Read&nbsp;&nbsp;Only
             </button>
           </div>
 
-          <!--<div *ngIf="false">-->
-          <!--<button class="btn btn-xs btn-primary" type="button" data-toggle="modal" attr.data-target="#open{{item.id}}"-->
-          <!--title="Open Tasklist">Show Detail</button>-->
-          <!--</div>-->
+          <div *ngIf="(!item.owner) && (item.is_write)">
+            <button class="btn btn-xs btn-primary" type="button" data-toggle="modal" attr.data-target="#open{{item.id}}"
+                    title="Open Tasklist">Show Detail
+            </button>
+          </div>
         </td>
 
         <!-- Modal Edit -->
@@ -90,7 +95,9 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button (click)="getTasklist(item.id)" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button (click)="getTasklist(item.id)" type="button" class="btn btn-danger" data-dismiss="modal">
+                  Cancel
+                </button>
                 <button (click)="updateTasklist(item.id, item.name)"
                         type="button" class="btn btn-primary" data-dismiss="modal">Save
                 </button>
@@ -118,22 +125,7 @@
         </div>
 
         <!-- Modal Open -->
-        <div class="modal fade" attr.id="open{{item.id}}" role="dialog">
-          <div class="modal-dialog modal-lg">
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Detail of tasklist <strong>{{item.name}}</strong></h4>
-              </div>
-              <div class="modal-body">
-                <app-todos [tasklist]="item"> Loading</app-todos>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <app-todos [tasklist]="item"> Loading</app-todos>
 
       </tr>
       </tbody>
@@ -149,3 +141,9 @@
 
   </div>
 </div>
+
+<script type="text/javascript">
+  $(window).on('load',function(){
+    $('#myModal').modal('show');
+  });
+</script>
