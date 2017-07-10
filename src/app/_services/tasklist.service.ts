@@ -15,6 +15,13 @@ export class TasklistService {
   getTasklists(): Promise<any> {
     return this.http.get('https://angular-task-list.herokuapp.com/task_lists', this.jwt())
       .toPromise()
+      .then(response => response.json() as Tasklist[])
+      .catch(this.handleError);
+  }
+
+  getTasklist(tasklist_id: number): Promise<any> {
+    return this.http.get(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}`, this.jwt())
+      .toPromise()
       .then(response => response.json() as Tasklist)
       .catch(this.handleError);
   }

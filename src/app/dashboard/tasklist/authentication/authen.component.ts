@@ -24,6 +24,7 @@ export class AuthenComponent implements OnInit {
           console.log('Get users success');
         })
       .then(() => {
+          this.users = this.users.filter(h => h.email !== this.userService.getCurrentUser()[0]);
           if (this.authen_users) {
             this.authen_users.forEach((item) => {
               item.user_email = this.users.filter(h => h.id === item.user_id)[0].email;

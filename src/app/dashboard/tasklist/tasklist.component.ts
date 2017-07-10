@@ -96,9 +96,12 @@ export class TasklistComponent implements OnInit {
   updateTasklist(tasklist_id: number, tasklist_name: string): void {
     this.tasklistService.updateTasklist(tasklist_id, tasklist_name)
       .then(() => console.log('Rename tasklist success'))
-      .catch(() => {
-        this.data.filter(h => h.id === tasklist_id)[0].name = 'tasklistName';
-      })
+      .catch(() => this.getTasklist(tasklist_id))
   }
 
+  getTasklist(tasklist_id: number) {
+    this.tasklistService.getTasklist(tasklist_id)
+      .then((data) => this.data.filter(h => h.id === tasklist_id)[0].name = data.name)
+      .then(() => console.log(`Get tasklist ${tasklist_id} success`))
+  }
 }

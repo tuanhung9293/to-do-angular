@@ -81,7 +81,6 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Edit tasklist <strong>{{item.name}}</strong></h4>
               </div>
               <div class="modal-body">
@@ -91,7 +90,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button (click)="getTasklist(item.id)" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 <button (click)="updateTasklist(item.id, item.name)"
                         type="button" class="btn btn-primary" data-dismiss="modal">Save
                 </button>
@@ -106,16 +105,12 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Edit tasklist <strong>{{item.name}}</strong></h4>
               </div>
               <div class="modal-body">
                 <app-authen [authen_users]="item.authen_users" [tasklist]="item"></app-authen>
               </div>
               <div class="modal-footer">
-                <!--<button (click)="getTasklists()"-->
-                        <!--type="button" class="btn btn-danger" data-dismiss="modal">Close-->
-                <!--</button>-->
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>
@@ -128,7 +123,6 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Detail of tasklist <strong>{{item.name}}</strong></h4>
               </div>
               <div class="modal-body">
