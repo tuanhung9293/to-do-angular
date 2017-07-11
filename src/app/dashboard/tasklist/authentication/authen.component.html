@@ -8,22 +8,22 @@
         <li *ngFor="let user of users | orderBy: 'email': false" style="cursor:pointer"
             onmouseover="this.style.color='blue'" onmouseout="this.style.color=''"
         >
-          <div (click)="createAuthenTasklist(user.id)">
+          <div (click)="createAuthorizedUser(user.id)">
             &nbsp;{{user.email}}&nbsp;
           </div>
         </li>
       </ul>
     </div>
 
-    <div *ngFor="let authen_user of authen_users | orderBy: 'is_write': true" style="display:inline-block">
+    <div *ngFor="let authen_user of authorizedUsers | orderBy: 'is_write': true" style="display:inline-block">
       <div>
         <span class="label" style="cursor:pointer"
               [ngClass]="authen_user.is_write == true ? 'label-success' : 'label-default'"
-              (click)="updateAuthenTasklist(authen_user.user_id)"
+              (click)="updateAuthorizedUser(authen_user.user_id)"
               onmouseover="this.style.backgroundColor='#ddd'"
               onmouseout="this.style.backgroundColor=''">Write
         </span>
-        <div (click)="deleteAuthenTasklist(authen_user.user_id)"
+        <div (click)="deleteAuthorizedUser(authen_user.user_id)"
              style="display:inline-block; cursor:pointer" onmouseover="this.style.color='#ddd'"
              onmouseout="this.style.color=''"
              [ngClass]="authen_user.is_write == true ? 'text-primary' : 'text-muted'">&nbsp;{{authen_user.user_email}}

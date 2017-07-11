@@ -6,7 +6,7 @@ export class Tasklist {
   share: number;
   count: number;
   done: number;
-  authen_users: Authen[];
+  authorizedUsers: Authen[];
   owner: boolean;
   is_write: boolean;
 }

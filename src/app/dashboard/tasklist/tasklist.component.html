@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-4">
         <label>Tasklist name: &nbsp;</label><input [(ngModel)]="tasklistName.value" #tasklistName required/>
-        <button (click)="addTasklist(tasklistName.value); tasklistName.value=''"
+        <button (click)="createTasklist(tasklistName.value); tasklistName.value=''"
                 class="btn btn-primary btn-sm" [disabled]="tasklistName.value===''">Add
         </button>
       </div>
@@ -115,7 +115,7 @@
                 <h4 class="modal-title">Edit tasklist <strong>{{item.name}}</strong></h4>
               </div>
               <div class="modal-body">
-                <app-authen [authen_users]="item.authen_users" [tasklist]="item"></app-authen>
+                <app-authen [authorizedUsers]="item.authorizedUsers" [tasklist]="item"></app-authen>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

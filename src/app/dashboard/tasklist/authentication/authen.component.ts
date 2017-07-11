@@ -8,7 +8,7 @@ import {User, Authen, Tasklist} from '../../../_models/';
 })
 
 export class AuthenComponent implements OnInit {
-  @Input() authen_users: Authen[];
+  @Input() authorizedUsers: Authen[];
   @Input() tasklist: Tasklist;
   users: User[];
 
@@ -25,8 +25,8 @@ export class AuthenComponent implements OnInit {
         })
       .then(() => {
           this.users = this.users.filter(h => h.email !== this.userService.getCurrentUser()[0]);
-          if (this.authen_users) {
-            this.authen_users.forEach((item) => {
+          if (this.authorizedUsers) {
+            this.authorizedUsers.forEach((item) => {
               item.user_email = this.users.filter(h => h.id === item.user_id)[0].email;
               this.users = this.users.filter(h => h.id !== item.user_id);
             })
@@ -35,13 +35,13 @@ export class AuthenComponent implements OnInit {
       )
   }
 
-  createAuthenTasklist(user_id: number) {
-    this.tasklistService.createAuthenTasklist(this.tasklist.id, user_id)
+  createAuthorizedUser(user_id: number) {
+    this.tasklistService.createAuthorizedUser(this.tasklist.id, user_id)
       .then(
         data => {
-          this.authen_users.push(data);
+          this.authorizedUsers.push(data);
           let email = this.users.filter(h => h.id === data.user_id)[0].email;
-          this.authen_users[this.authen_users.length - 1].user_email = email;
+          this.authorizedUsers[this.authorizedUsers.length - 1].user_email = email;
           console.log(`Create Authen users success`);
         })
       .then(() => {
@@ -50,21 +50,21 @@ export class AuthenComponent implements OnInit {
       })
   }
 
-  deleteAuthenTasklist(user_id: number) {
-    this.tasklistService.deleteAuthenTasklist(this.tasklist.id, user_id)
+  deleteAuthorizedUser(user_id: number) {
+    this.tasklistService.deleteAuthorizedUser(this.tasklist.id, user_id)
       .then(
         data => {
-          let email = this.authen_users.filter(h => h.user_id === user_id)[0].user_email;
+          let email = this.authorizedUsers.filter(h => h.user_id === user_id)[0].user_email;
           this.users.push({id: user_id, email: email, password: ''});
-          this.authen_users = this.authen_users.filter(h => h.user_id !== user_id);
+          this.authorizedUsers = this.authorizedUsers.filter(h => h.user_id !== user_id);
           console.log(`Delete Authen users success`);
         })
       .then(() => this.tasklist.share--)
   }
 
-  updateAuthenTasklist(user_id: number) {
-    let authen_user = this.authen_users.filter(h => h.user_id === user_id)[0];
-    this.tasklistService.updateAuthenTasklist(this.tasklist.id, user_id, !authen_user.is_write)
+  updateAuthorizedUser(user_id: number) {
+    let authen_user = this.authorizedUsers.filter(h => h.user_id === user_id)[0];
+    this.tasklistService.updateAuthorizedUser(this.tasklist.id, user_id, !authen_user.is_write)
       .then(
         data => {
           authen_user.is_write = data.is_write;

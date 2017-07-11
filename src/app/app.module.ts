@@ -11,13 +11,15 @@ import {AlertService, UserService, AuthenticationService} from './_services';
 import {LoginComponent} from './login/index';
 import {RegisterComponent} from './register/index';
 import {AppComponent} from './app.component';
+import {AlertComponent} from './_directives';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

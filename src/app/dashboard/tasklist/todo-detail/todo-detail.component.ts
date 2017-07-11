@@ -12,9 +12,9 @@ import {Todo, Tasklist} from '../../../_models';
 })
 
 export class TodoDetailComponent implements OnInit {
-  tasklistDetail_id: number;
+  tasklistDetailId: number;
   tasklistDetail: Tasklist;
-  authenTasklists: Tasklist[];
+  tasklistsAuthorized: Tasklist[];
   newtodo: string;
   todos: Todo[] = [];
 
@@ -24,20 +24,20 @@ export class TodoDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tasklistDetail_id = (+this.route.params['_value'].task_list_id);
-    this.getAuthenTasklists()
+    this.tasklistDetailId = (+this.route.params['_value'].task_list_id);
+    this.getTasklistsAuthorized()
   }
 
-  getAuthenTasklists() {
-    this.tasklistService.get_authen_Tasklist()
+  getTasklistsAuthorized() {
+    this.tasklistService.getTasklistsAuthorized()
       .then((data) => {
-        this.authenTasklists = data.filter(h => h.id === this.tasklistDetail_id)
+        this.tasklistsAuthorized = data.filter(h => h.id === this.tasklistDetailId)
       })
       .then(() => {
-        if (this.authenTasklists.length === 0) {
+        if (this.tasklistsAuthorized.length === 0) {
           this.getTasklistDetail()
         } else {
-          this.tasklistDetail = this.authenTasklists[0];
+          this.tasklistDetail = this.tasklistsAuthorized[0];
           console.log(this.tasklistDetail);
           this.getTodos();
         }
@@ -45,7 +45,7 @@ export class TodoDetailComponent implements OnInit {
   }
 
   getTasklistDetail() {
-    this.tasklistService.getTasklist(this.tasklistDetail_id)
+    this.tasklistService.getTasklist(this.tasklistDetailId)
       .then((data) => this.tasklistDetail = data)
       .then(() => this.tasklistDetail.is_write = true)
       .then(() => console.log(this.tasklistDetail))
@@ -53,7 +53,7 @@ export class TodoDetailComponent implements OnInit {
   }
 
   getTodos() {
-    this.tasklistService.getTodos(this.tasklistDetail_id)
+    this.tasklistService.getTodos(this.tasklistDetailId)
       .then(
         data => {
           this.todos = data;
@@ -63,7 +63,7 @@ export class TodoDetailComponent implements OnInit {
 
 
   addTodo(newtodo: string) {
-    this.tasklistService.addTodo(this.tasklistDetail_id, newtodo)
+    this.tasklistService.addTodo(this.tasklistDetailId, newtodo)
       .then(() => {
           console.log(`Add todos ${newtodo} success`);
           this.getTodos();
@@ -72,7 +72,7 @@ export class TodoDetailComponent implements OnInit {
   }
 
   doneTodo(todo_id: number) {
-    this.tasklistService.updateTodo(this.tasklistDetail_id, todo_id)
+    this.tasklistService.updateTodo(this.tasklistDetailId, todo_id)
       .then(
         data => {
           console.log(`Done todo ${todo_id} success`);
@@ -81,7 +81,7 @@ export class TodoDetailComponent implements OnInit {
   }
 
   deleteDone(todo_id: number) {
-    this.tasklistService.deleteTodo(this.tasklistDetail_id, todo_id)
+    this.tasklistService.deleteTodo(this.tasklistDetailId, todo_id)
       .then(
         data => {
           console.log(`Delete todo ${todo_id} success`);

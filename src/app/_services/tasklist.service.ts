@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions, Response} from '@angular/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import {toPromise} from 'rxjs/operator/toPromise';
 import {Tasklist} from '../_models';
 import {Todo} from '../_models';
 import {Authen} from '../_models';
@@ -26,35 +25,35 @@ export class TasklistService {
       .catch(this.handleError);
   }
 
-  get_authen_Tasklist(): Promise<any> {
+  getTasklistsAuthorized(): Promise<any> {
     return this.http.get('https://angular-task-list.herokuapp.com/shared', this.jwt())
       .toPromise()
       .then(response => response.json() as Tasklist)
       .catch(this.handleError);
   }
 
-  get_users_authed_each_Tasklist(tasklist_id: number): Promise<any> {
+  getAuthorizedUsers(tasklist_id: number): Promise<any> {
     return this.http.get(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/share`, this.jwt())
       .toPromise()
       .then(response => response.json() as Authen[])
       .catch(this.handleError);
   }
 
-  createAuthenTasklist(tasklist_id: number, user_id: number): Promise<any> {
+  createAuthorizedUser(tasklist_id: number, user_id: number): Promise<any> {
     return this.http.post(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/share`, {user_id: user_id}, this.jwt())
       .toPromise()
       .then(response => response.json() as Authen[])
       .catch(this.handleError);
   }
 
-  updateAuthenTasklist(tasklist_id: number, user_id: number, is_write: boolean): Promise<any> {
+  updateAuthorizedUser(tasklist_id: number, user_id: number, is_write: boolean): Promise<any> {
     return this.http.put(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/share`, {user_id: user_id, is_write: is_write}, this.jwt())
       .toPromise()
       .then(response => response.json() as Authen[])
       .catch(this.handleError);
   }
 
-  deleteAuthenTasklist(tasklist_id: number, user_id: number): Promise<any> {
+  deleteAuthorizedUser(tasklist_id: number, user_id: number): Promise<any> {
     return this.http
       .delete(`https://angular-task-list.herokuapp.com/task_lists/${tasklist_id}/share`, new RequestOptions({body: {user_id: user_id}, headers: this.jwt().headers}))
       .toPromise()
@@ -62,12 +61,10 @@ export class TasklistService {
       .catch(this.handleError);
   }
 
-  addTasklist(tasklistName: string): Promise<any> {
+  createTasklist(tasklistName: string): Promise<any> {
     return this.http.post('https://angular-task-list.herokuapp.com/task_lists', {name: tasklistName}, this.jwt())
       .toPromise()
-      .then(response => {
-        console.log('create tasklist success in service')
-      })
+      .then(response => response.json() as Tasklist[])
       .catch(this.handleError);
   }
 

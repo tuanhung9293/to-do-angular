@@ -1,24 +1,25 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+
+import {DataTableModule} from 'angular2-datatable';
+import {Ng2OrderModule} from 'ng2-order-pipe';
 
 import {DashboardComponent} from './dashboard.component';
 import {TasklistComponent} from './tasklist';
 import {ProfileComponent} from './profile';
 import {SearchComponent} from './search';
-
-import {TasklistFilterPipe} from './tasklist/tasklist-filter.pipe';
 import {TodosComponent} from './tasklist/todo';
-import {AuthenComponent} from './tasklist/authentication';
 import {TodoDetailComponent} from './tasklist/todo-detail';
+import {AuthenComponent} from './tasklist/authentication';
 
-import {DataTableModule} from 'angular2-datatable';
-import { Ng2OrderModule } from 'ng2-order-pipe';
+import {AuthGuard} from '../_guards';
+import {TasklistFilterPipe} from './tasklist/tasklist-filter.pipe';
 
-import {AuthGuard} from '../_guards/index';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {TasklistService, UserService, SearchService} from '../_services';
+
 
 @NgModule({
   imports: [

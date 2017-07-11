@@ -8,7 +8,6 @@ import {TodoDetailComponent} from './tasklist/todo-detail/';
 
 import {AuthGuard} from '../_guards';
 
-
 const dashboardRoutes: Routes = [
   {
     path: '',
@@ -17,7 +16,7 @@ const dashboardRoutes: Routes = [
     children: [
       {path: '', component: TasklistComponent},
       {path: 'profile', component: ProfileComponent},
-      { path: 'detail/:task_list_id', component: TodoDetailComponent }
+      {path: 'detail/:task_list_id', component: TodoDetailComponent}
     ]
   }
 ];

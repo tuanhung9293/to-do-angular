@@ -8,7 +8,7 @@ import {AlertService, UserService} from '../../_services';
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit{
-  model: any = {};
+  newPassword: any = {};
   current_user: string;
 
   constructor(private userService: UserService,
@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit{
   }
 
   changePassword() {
-    this.userService.changePassword(this.model)
+    this.userService.changePassword(this.newPassword)
       .then(
         data => {
           // this.alertService.success('Registration successful', true);

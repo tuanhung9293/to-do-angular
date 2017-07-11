@@ -22,6 +22,11 @@ export class TasklistComponent implements OnInit {
               private router: Router) {
   }
 
+  ngOnInit(): void {
+    this.getTasklists();
+    this.getUsers();
+  }
+
   getUsers() {
     this.userService.getUsers()
       .then((data) => {
@@ -43,17 +48,17 @@ export class TasklistComponent implements OnInit {
         })
       .then(() => {
         this.data.forEach((item, index) => {
-          this.get_users_authed_each_Tasklist(item.id, index)
+          this.getAuthorizedUsers(item.id, index)
         })
       })
       .then(() => {
-          this.get_authen_Tasklist();
+          this.getTasklistsAuthorized();
         }
       )
   }
 
-  get_authen_Tasklist() {
-    this.tasklistService.get_authen_Tasklist()
+  getTasklistsAuthorized() {
+    this.tasklistService.getTasklistsAuthorized()
       .then(
         data => {
           data.forEach((item) => {
@@ -64,32 +69,31 @@ export class TasklistComponent implements OnInit {
         })
   }
 
-  get_users_authed_each_Tasklist(tasklist_id: number, data_id: number) {
-    this.tasklistService.get_users_authed_each_Tasklist(tasklist_id)
+  getAuthorizedUsers(tasklist_id: number, data_id: number) {
+    this.tasklistService.getAuthorizedUsers(tasklist_id)
       .then(
         data => {
           this.data[data_id].share = data.length;
-          this.data[data_id].authen_users = data;
+          this.data[data_id].authorizedUsers = data;
           console.log('Get who authed tasklists success');
         })
   }
 
-  ngOnInit(): void {
-    this.getTasklists();
-    this.getUsers();
+  getTasklist(tasklist_id: number) {
+    this.tasklistService.getTasklist(tasklist_id)
+      .then((data) => this.data.filter(h => h.id === tasklist_id)[0].name = data.name)
+      .then(() => console.log(`Get tasklist ${tasklist_id} success`))
   }
 
-  deleteTasklist(id: number): void {
-    this.tasklistService.deleteTasklist(id)
-      .then(() => {
-        this.data = this.data.filter(h => h.id !== id);
-      });
-  }
-
-  addTasklist(tasklistName: string) {
-    this.tasklistService.addTasklist(tasklistName)
+  createTasklist(tasklistName: string) {
+    this.tasklistService.createTasklist(tasklistName)
       .then((response) => {
-          this.getTasklists();
+          this.data.push(response);
+          this.data[this.data.length - 1].is_write = true;
+          this.data[this.data.length - 1].owner = true;
+          this.data[this.data.length - 1].share = 0;
+          this.data[this.data.length - 1].user = this.userService.getCurrentUser();
+          this.data[this.data.length - 1].authorizedUsers = [];
           console.log('Create tasklist success');
         }
       )
@@ -101,13 +105,10 @@ export class TasklistComponent implements OnInit {
       .catch(() => this.getTasklist(tasklist_id))
   }
 
-  getTasklist(tasklist_id: number) {
-    this.tasklistService.getTasklist(tasklist_id)
-      .then((data) => this.data.filter(h => h.id === tasklist_id)[0].name = data.name)
-      .then(() => console.log(`Get tasklist ${tasklist_id} success`))
-  }
-
-  gotoDetail(tasklist_id: number): void {
-    this.router.navigate(['/detail', tasklist_id])
+  deleteTasklist(id: number): void {
+    this.tasklistService.deleteTasklist(id)
+      .then(() => {
+        this.data = this.data.filter(h => h.id !== id);
+      });
   }
 }

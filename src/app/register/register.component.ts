@@ -9,7 +9,7 @@ import {AlertService, UserService} from '../_services/index';
 })
 
 export class RegisterComponent {
-  model: any = {};
+  userRegister: any = {};
   loading = false;
 
   constructor(private router: Router,
@@ -19,9 +19,9 @@ export class RegisterComponent {
 
   register() {
     this.loading = true;
-    this.userService.createUser(this.model)
+    this.userService.createUser(this.userRegister)
       .then(() => {
-          // this.alertService.success('Registration successful', true);
+          this.alertService.success('Registration successful', true);
           this.router.navigate(['/login']);
         })
       .catch(error => {

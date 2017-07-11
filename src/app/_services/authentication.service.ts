@@ -11,9 +11,7 @@ export class AuthenticationService {
   login(email: string, password: string) {
     return this.http.post('https://angular-task-list.herokuapp.com/auth/sign_in', {email: email, password: password})
       .map((response: Response) => {
-        // login successful if there's a jwt token in the response
         if (response && response.ok) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(response));
         }
       });
