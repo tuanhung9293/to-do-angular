@@ -8,7 +8,7 @@ import {Todo, Tasklist} from '../../../_models';
 
 @Component({
   selector: 'app-tododetail',
-  templateUrl: './todoDetail.component.html'
+  templateUrl: './todo-detail.component.html'
 })
 
 export class TodoDetailComponent implements OnInit {

@@ -4,7 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
 import {TasklistComponent} from './tasklist';
 import {ProfileComponent} from './profile';
-import {TodoDetailComponent} from './tasklist/todoDetail/';
+import {TodoDetailComponent} from './tasklist/todo-detail/';
 
 import {AuthGuard} from '../_guards';
 

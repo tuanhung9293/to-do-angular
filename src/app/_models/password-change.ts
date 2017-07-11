@@ -1,4 +1,4 @@
-export class ChangePassword {
+export class PasswordChange {
     password: string;
     password_confirmation: string;
 }

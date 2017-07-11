@@ -1,10 +1,10 @@
-import * as _ from 'lodash';
 import {Pipe, PipeTransform} from '@angular/core';
+import * as _ from 'lodash';
 
 @Pipe({
-  name: 'dataFilter'
+  name: 'tasklistFilter'
 })
-export class DataFilterPipe implements PipeTransform {
+export class TasklistFilterPipe implements PipeTransform {
 
   transform(array: any[], query: string): any {
     if (query) {

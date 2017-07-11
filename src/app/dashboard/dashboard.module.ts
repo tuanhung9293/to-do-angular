@@ -8,10 +8,10 @@ import {TasklistComponent} from './tasklist';
 import {ProfileComponent} from './profile';
 import {SearchComponent} from './search';
 
-import {DataFilterPipe} from './tasklist/data-silter.pipe';
+import {TasklistFilterPipe} from './tasklist/tasklist-filter.pipe';
 import {TodosComponent} from './tasklist/todo';
 import {AuthenComponent} from './tasklist/authentication';
-import {TodoDetailComponent} from './tasklist/todoDetail';
+import {TodoDetailComponent} from './tasklist/todo-detail';
 
 import {DataTableModule} from 'angular2-datatable';
 import { Ng2OrderModule } from 'ng2-order-pipe';
@@ -33,7 +33,7 @@ import {TasklistService, UserService, SearchService} from '../_services';
     DashboardComponent,
     TasklistComponent,
     ProfileComponent,
-    DataFilterPipe,
+    TasklistFilterPipe,
     TodosComponent,
     AuthenComponent,
     SearchComponent,

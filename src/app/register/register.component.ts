@@ -19,9 +19,8 @@ export class RegisterComponent {
 
   register() {
     this.loading = true;
-    this.userService.create(this.model)
-      .then(
-        data => {
+    this.userService.createUser(this.model)
+      .then(() => {
           // this.alertService.success('Registration successful', true);
           this.router.navigate(['/login']);
         })

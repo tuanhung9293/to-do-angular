@@ -15,7 +15,7 @@
       </div>
     </div>
     <br>
-    <table class="table table-bordered table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable"
+    <table class="table table-bordered table-striped" [mfData]="data | tasklistFilter : filterQuery" #mf="mfDataTable"
            [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
       <thead>
       <tr>

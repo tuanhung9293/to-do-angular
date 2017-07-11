@@ -1,29 +1,26 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions, Response} from '@angular/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import {User} from '../_models';
-import {ChangePassword} from '../_models';
-import {toPromise} from 'rxjs/operator/toPromise';
-import {Tasklist} from '../_models/tasklist';
-import {current} from "codelyzer/util/syntaxKind";
+import {PasswordChange} from '../_models';
 
 @Injectable()
 export class UserService {
   constructor(private http: Http) {
   }
 
-  create(user: User): Promise<User> {
+  createUser(user: User): Promise<User> {
     return this.http.post('https://angular-task-list.herokuapp.com/auth', user)
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
   }
 
-  changePassword(changepassword: ChangePassword): Promise<ChangePassword> {
+  changePassword(changepassword: PasswordChange): Promise<PasswordChange> {
     return this.http.put('https://angular-task-list.herokuapp.com/auth/password', changepassword, this.jwt())
       .toPromise()
-      .then(response => response.json() as ChangePassword)
+      .then(response => response.json() as PasswordChange)
       .catch(this.handleError);
   }
 

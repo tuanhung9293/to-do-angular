@@ -20,14 +20,14 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "jquery.dataTables.min.css",
+        "../src/assets/plugins/jquery.dataTables.min.css",
         "styles.css"
       ],
       "scripts": [
-        "jquery.min.js",
-        "bootstrap.min.js",
-        "jquery.dataTables.min.js",
-        "base_tables_datatables.js"
+        "../src/assets/core/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "../src/assets/plugins/jquery.dataTables.min.js",
+        "../src/assets/plugins/base_tables_datatables.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
