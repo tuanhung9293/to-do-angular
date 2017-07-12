@@ -6,6 +6,7 @@ import {User} from '../_models';
 import {PasswordChange} from '../_models';
 
 import {AuthenticationService} from './authentication.service';
+import * as PRODUCT from '../_constants/product-env';
 
 @Injectable()
 export class UserService {
@@ -13,21 +14,21 @@ export class UserService {
               private authenticationService: AuthenticationService) {}
 
   createUser(user: User): Promise<User> {
-    return this.http.post(`${this.authenticationService.url}auth`, user)
+    return this.http.post(`${PRODUCT.serverURL}/${PRODUCT.userCreatePATH}/`, user)
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.authenticationService.handleError);
   }
 
   changePassword(changepassword: PasswordChange): Promise<PasswordChange> {
-    return this.http.put(`${this.authenticationService.url}auth/password`, changepassword, this.authenticationService.jwt())
+    return this.http.put(`${PRODUCT.serverURL}/${PRODUCT.userPasswordPATH}/`, changepassword, this.authenticationService.jwt())
       .toPromise()
       .then(response => response.json() as PasswordChange)
       .catch(this.authenticationService.handleError);
   }
 
   getUsers(): Promise<any> {
-    return this.http.get(`${this.authenticationService.url}users`, this.authenticationService.jwt())
+    return this.http.get(`${PRODUCT.serverURL}/${PRODUCT.getUsersPATH}/`, this.authenticationService.jwt())
       .toPromise()
       .then(response => response.json() as User[])
       .catch(this.authenticationService.handleError);

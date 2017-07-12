@@ -2,15 +2,15 @@ import {Injectable} from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import 'rxjs/add/operator/map'
 
+import * as PRODUCT from '../_constants/product-env';
+
 @Injectable()
 export class AuthenticationService {
-  url: string = 'https://angular-task-list.herokuapp.com/';
-
   constructor(private http: Http) {
   }
 
   login(email: string, password: string) {
-    return this.http.post(`${this.url}auth/sign_in`, {email: email, password: password})
+    return this.http.post(`${PRODUCT.serverURL}/${PRODUCT.userSignInPATH}/`, {email: email, password: password})
       .map((response: Response) => {
         if (response && response.ok) {
           localStorage.setItem('currentUser', JSON.stringify(response));

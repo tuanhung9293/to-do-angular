@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
+import {Http} from '@angular/http';
 
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import {TodoSearch} from '../_models';
 import {AuthenticationService} from './authentication.service';
+import * as PRODUCT from '../_constants/product-env';
 
 @Injectable()
 export class SearchService {
@@ -15,7 +16,7 @@ export class SearchService {
 
   searchTodo(term: string): Observable<TodoSearch[]> {
     return this.http
-      .get(`${this.authenticationService.url}search/${term}`, this.authenticationService.jwt())
+      .get(`${PRODUCT.serverURL}/${PRODUCT.searchTodoPATH}/${term}`, this.authenticationService.jwt())
       .map(response => response.json() as TodoSearch[]);
   }
 }
