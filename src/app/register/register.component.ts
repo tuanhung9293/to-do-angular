@@ -20,13 +20,14 @@ export class RegisterComponent {
   register() {
     this.loading = true;
     this.userService.createUser(this.userRegister)
-      .then(() => {
-          this.alertService.success('Registration successful', true);
-          this.router.navigate(['/login']);
-        })
-      .catch(error => {
-        this.alertService.error(error);
-        this.loading = false;
-      });
+      .subscribe(() => {
+        this.alertService.success('Registration successful', true);
+        this.router.navigate(['/login']);
+      },
+      error => {
+      this.alertService.error(error);
+      this.loading = false;
+      }
+    )
   }
 }

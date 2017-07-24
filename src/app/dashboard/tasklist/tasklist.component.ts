@@ -29,14 +29,12 @@ export class TasklistComponent implements OnInit {
 
   getUsers() {
     this.userService.getUsers()
-      .then((data) => {
-        this.users = data;
-      })
+      .subscribe(data => this.users = data)
   }
 
   getTasklists() {
     this.tasklistService.getTasklists()
-      .then(
+      .subscribe(
         data => {
           this.data = data;
           this.data.forEach((item) => {
@@ -45,21 +43,16 @@ export class TasklistComponent implements OnInit {
             item.user = this.userService.getCurrentUser();
           });
           console.log('Get tasklists success');
-        })
-      .then(() => {
-        this.data.forEach((item, index) => {
-          this.getAuthorizedUsers(item.id, index)
-        })
-      })
-      .then(() => {
+          this.data.forEach((item, index) => {
+            this.getAuthorizedUsers(item.id, index)
+          });
           this.getTasklistsAuthorized();
-        }
-      )
+        })
   }
 
   getTasklistsAuthorized() {
     this.tasklistService.getTasklistsAuthorized()
-      .then(
+      .subscribe(
         data => {
           data.forEach((item) => {
             item.user = this.users.filter(h => h.id === item.user_id)[0].email;
@@ -71,7 +64,7 @@ export class TasklistComponent implements OnInit {
 
   getAuthorizedUsers(tasklist_id: number, data_id: number) {
     this.tasklistService.getAuthorizedUsers(tasklist_id)
-      .then(
+      .subscribe(
         data => {
           this.data[data_id].share = data.length;
           this.data[data_id].authorizedUsers = data;
@@ -81,13 +74,18 @@ export class TasklistComponent implements OnInit {
 
   getTasklist(tasklist_id: number) {
     this.tasklistService.getTasklist(tasklist_id)
-      .then((data) => this.data.filter(h => h.id === tasklist_id)[0].name = data.name)
-      .then(() => console.log(`Get tasklist ${tasklist_id} success`))
+      .subscribe(
+        data => {
+          this.data.filter(h => h.id === tasklist_id)[0].name = data.name;
+          console.log(`Get tasklist ${tasklist_id} success`);
+        }
+      )
   }
 
   createTasklist(tasklistName: string) {
     this.tasklistService.createTasklist(tasklistName)
-      .then((response) => {
+      .subscribe(
+        response => {
           this.data.push(response);
           this.data[this.data.length - 1].is_write = true;
           this.data[this.data.length - 1].owner = true;
@@ -101,14 +99,13 @@ export class TasklistComponent implements OnInit {
 
   updateTasklist(tasklist_id: number, tasklist_name: string): void {
     this.tasklistService.updateTasklist(tasklist_id, tasklist_name)
-      .then(() => console.log('Rename tasklist success'))
-      .catch(() => this.getTasklist(tasklist_id))
+      .subscribe(
+        () => console.log('Rename tasklist success'),
+        () => this.getTasklist(tasklist_id))
   }
 
   deleteTasklist(id: number): void {
     this.tasklistService.deleteTasklist(id)
-      .then(() => {
-        this.data = this.data.filter(h => h.id !== id);
-      });
+      .subscribe(() => this.data = this.data.filter(h => h.id !== id))
   }
 }

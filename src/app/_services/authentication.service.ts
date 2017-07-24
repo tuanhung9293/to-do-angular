@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
+// import {Observable} from 'rxjs/Observable';
 
 import * as PRODUCT from '../_constants/product-env';
 
@@ -33,6 +34,12 @@ export class AuthenticationService {
       headers.append('Client', currentUser.headers['Client']);
       headers.append('Access-Token', currentUser.headers['Access-Token']);
       return new RequestOptions({headers: headers});
+    }
+  }
+
+  extractData(res: Response) {
+    if (res.status < 200 || res.status >= 300) {
+      throw new Error('Bad response status: ' + res.status);
     }
   }
 

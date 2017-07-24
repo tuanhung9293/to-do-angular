@@ -30,33 +30,43 @@ export class TodoDetailComponent implements OnInit {
 
   getTasklistsAuthorized() {
     this.tasklistService.getTasklistsAuthorized()
-      .then((data) => {
-        this.tasklistsAuthorized = data.filter(h => h.id === this.tasklistDetailId)
-      })
-      .then(() => {
-        if (this.tasklistsAuthorized.length === 0) {
-          this.getTasklistDetail()
-        } else {
-          this.tasklistDetail = this.tasklistsAuthorized[0];
-          console.log(this.tasklistDetail);
-          this.getTodos();
+      .subscribe(
+        data => {
+          this.tasklistsAuthorized = data.filter(h => h.id === this.tasklistDetailId);
+          if (this.tasklistsAuthorized.length === 0) {
+            this.getTasklistDetail()
+          } else {
+            this.tasklistDetail = this.tasklistsAuthorized[0];
+            console.log(this.tasklistDetail);
+            this.getTodos();
+          }
         }
-      })
+      )
   }
 
   getTasklistDetail() {
     this.tasklistService.getTasklist(this.tasklistDetailId)
-      .then((data) => this.tasklistDetail = data)
-      .then(() => this.tasklistDetail.is_write = true)
-      .then(() => console.log(this.tasklistDetail))
-      .then(() => this.getTodos())
+      .subscribe(
+        data => {
+          this.tasklistDetail = data;
+          this.tasklistDetail.is_write = true;
+          console.log(this.tasklistDetail);
+          this.getTodos();
+        }
+      )
   }
 
   getTodos() {
     this.tasklistService.getTodos(this.tasklistDetailId)
-      .then(
+      .subscribe(
         data => {
           this.todos = data;
+          this.tasklistDetail.count = 0;
+          this.tasklistDetail.done = 0;
+          data.forEach(h => {
+            if (!h.done) {this.tasklistDetail.count++}
+            if (h.done) {this.tasklistDetail.done++}
+          });
           console.log('Get todos success');
         })
   }
@@ -64,7 +74,8 @@ export class TodoDetailComponent implements OnInit {
 
   addTodo(newtodo: string) {
     this.tasklistService.addTodo(this.tasklistDetailId, newtodo)
-      .then(() => {
+      .subscribe(
+        () => {
           console.log(`Add todos ${newtodo} success`);
           this.getTodos();
         }
@@ -73,7 +84,7 @@ export class TodoDetailComponent implements OnInit {
 
   doneTodo(todo_id: number) {
     this.tasklistService.updateTodo(this.tasklistDetailId, todo_id)
-      .then(
+      .subscribe(
         data => {
           console.log(`Done todo ${todo_id} success`);
           this.getTodos();
@@ -82,7 +93,7 @@ export class TodoDetailComponent implements OnInit {
 
   deleteDone(todo_id: number) {
     this.tasklistService.deleteTodo(this.tasklistDetailId, todo_id)
-      .then(
+      .subscribe(
         data => {
           console.log(`Delete todo ${todo_id} success`);
           this.getTodos();

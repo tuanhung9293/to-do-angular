@@ -14,8 +14,8 @@
                      name="newTodo">
               <span class="input-group-btn">
               <button class="btn btn-default"
-              type="submit" [disabled]="newtodo===''"
-              (click)="addTodo(newtodo); newtodo=''">Add Todo </button>
+                      type="submit" [disabled]="newtodo==='' || !newtodo"
+                      (click)="addTodo(newtodo); newtodo=''">Add Todo </button>
               </span>
             </div>
 
@@ -39,8 +39,8 @@
             </div>
             <br>
             <div>
-              <button (click)="doneAllTodos()" class="btn btn-primary btn-sm" [disabled]="!tasklistDetail.is_write">Mark all
-                as Done
+              <button (click)="doneAllTodos()" class="btn btn-primary btn-sm"
+                      [disabled]="!tasklistDetail.is_write || tasklistDetail.count < 1">Mark all as Done
               </button>
             </div>
           </div><!-- /.col-lg-6 -->
@@ -60,8 +60,8 @@
             </div>
             <br>
             <div>
-              <button (click)="deleteAllDones()" class="btn btn-danger btn-sm" [disabled]="!tasklistDetail.is_write">Delete
-                all Done
+              <button (click)="deleteAllDones()" class="btn btn-danger btn-sm"
+                      [disabled]="!tasklistDetail.is_write || tasklistDetail.done < 1">Delete all Done
               </button>
             </div>
 

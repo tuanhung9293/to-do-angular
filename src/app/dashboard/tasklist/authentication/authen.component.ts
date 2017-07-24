@@ -18,12 +18,10 @@ export class AuthenComponent implements OnInit {
 
   getUsers() {
     this.userService.getUsers()
-      .then(
+      .subscribe(
         data => {
           this.users = data;
           console.log('Get users success');
-        })
-      .then(() => {
           this.users = this.users.filter(h => h.email !== this.userService.getCurrentUser()[0]);
           if (this.authorizedUsers) {
             this.authorizedUsers.forEach((item) => {
@@ -37,35 +35,35 @@ export class AuthenComponent implements OnInit {
 
   createAuthorizedUser(user_id: number) {
     this.tasklistService.createAuthorizedUser(this.tasklist.id, user_id)
-      .then(
+      .subscribe(
         data => {
           this.authorizedUsers.push(data);
           let email = this.users.filter(h => h.id === data.user_id)[0].email;
           this.authorizedUsers[this.authorizedUsers.length - 1].user_email = email;
           console.log(`Create Authen users success`);
+
+          this.tasklist.share++;
+          this.users = this.users.filter(h => h.id !== user_id);
         })
-      .then(() => {
-        this.tasklist.share++;
-        this.users = this.users.filter(h => h.id !== user_id);
-      })
   }
 
   deleteAuthorizedUser(user_id: number) {
     this.tasklistService.deleteAuthorizedUser(this.tasklist.id, user_id)
-      .then(
+      .subscribe(
         data => {
           let email = this.authorizedUsers.filter(h => h.user_id === user_id)[0].user_email;
           this.users.push({id: user_id, email: email, password: ''});
           this.authorizedUsers = this.authorizedUsers.filter(h => h.user_id !== user_id);
           console.log(`Delete Authen users success`);
+
+          this.tasklist.share--
         })
-      .then(() => this.tasklist.share--)
   }
 
   updateAuthorizedUser(user_id: number) {
     let authen_user = this.authorizedUsers.filter(h => h.user_id === user_id)[0];
     this.tasklistService.updateAuthorizedUser(this.tasklist.id, user_id, !authen_user.is_write)
-      .then(
+      .subscribe(
         data => {
           authen_user.is_write = data.is_write;
           console.log(`Update Authen users ${user_id} is write ${authen_user.is_write} success`);

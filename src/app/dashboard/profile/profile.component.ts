@@ -7,7 +7,7 @@ import {AlertService, UserService} from '../../_services';
   selector: 'app-profile',
   templateUrl: './profile.component.html'
 })
-export class ProfileComponent implements OnInit{
+export class ProfileComponent implements OnInit {
   newPassword: any = {};
   current_user: string;
 
@@ -26,14 +26,13 @@ export class ProfileComponent implements OnInit{
 
   changePassword() {
     this.userService.changePassword(this.newPassword)
-      .then(
+      .subscribe(
         data => {
-          // this.alertService.success('Registration successful', true);
           this.router.navigate(['/']);
           console.log('Change password success');
+        },
+        error => {
+          this.alertService.error(error);
         })
-      .catch(error => {
-        this.alertService.error(error);
-      });
   }
 }

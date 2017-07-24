@@ -22,7 +22,7 @@ export class TodosComponent implements OnInit {
 
   getTodos() {
     this.tasklistService.getTodos(this.tasklist.id)
-      .then(
+      .subscribe(
         data => {
           this.todos = data;
           this.tasklist.count = 0;
@@ -38,7 +38,8 @@ export class TodosComponent implements OnInit {
 
   addTodo(newtodo: string) {
     this.tasklistService.addTodo(this.tasklist.id, newtodo)
-      .then(() => {
+      .subscribe(
+        () => {
           console.log(`Add todos ${newtodo} success`);
           this.getTodos();
         }
@@ -47,7 +48,7 @@ export class TodosComponent implements OnInit {
 
   doneTodo(todo_id: number) {
     this.tasklistService.updateTodo(this.tasklist.id, todo_id)
-      .then(
+      .subscribe(
         data => {
           console.log(`Done todo ${todo_id} success`);
           this.getTodos();
@@ -56,7 +57,7 @@ export class TodosComponent implements OnInit {
 
   deleteDone(todo_id: number) {
     this.tasklistService.deleteTodo(this.tasklist.id, todo_id)
-      .then(
+      .subscribe(
         data => {
           console.log(`Delete todo ${todo_id} success`);
           this.getTodos();
