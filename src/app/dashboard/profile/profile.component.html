@@ -1,6 +1,6 @@
 <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   <h3>Welcome {{current_user}}</h3>
-  <button class="btn btn-warning"><a [routerLink]="['/login']">Logout</a></button>
+  <button class="btn btn-warning"><a [routerLink]="['/login']" id="profile-logout-route">Logout</a></button>
   <br>
   <h3>Change Password</h3>
   <form name="form" (ngSubmit)="f.form.valid && changePassword()" #f="ngForm" novalidate>

@@ -17,10 +17,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCurrentUser();
-  }
-
-  getCurrentUser() {
     this.current_user = this.userService.getCurrentUser();
   }
 
@@ -29,7 +25,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         data => {
           this.router.navigate(['/']);
-          console.log('Change password success');
+          this.alertService.success('Change password success', true);
         },
         error => {
           this.alertService.error(error);

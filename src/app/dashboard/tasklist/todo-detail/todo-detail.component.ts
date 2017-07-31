@@ -37,10 +37,11 @@ export class TodoDetailComponent implements OnInit {
             this.getTasklistDetail()
           } else {
             this.tasklistDetail = this.tasklistsAuthorized[0];
-            console.log(this.tasklistDetail);
             this.getTodos();
           }
-        }
+          console.log('getTasklistsAuthorized success');
+        },
+        error => console.log('getTasklistsAuthorized fail')
       )
   }
 
@@ -50,9 +51,10 @@ export class TodoDetailComponent implements OnInit {
         data => {
           this.tasklistDetail = data;
           this.tasklistDetail.is_write = true;
-          console.log(this.tasklistDetail);
           this.getTodos();
-        }
+          console.log('getTasklist succsess');
+        },
+        error => console.log('getTasklist fail')
       )
   }
 
@@ -64,11 +66,16 @@ export class TodoDetailComponent implements OnInit {
           this.tasklistDetail.count = 0;
           this.tasklistDetail.done = 0;
           data.forEach(h => {
-            if (!h.done) {this.tasklistDetail.count++}
-            if (h.done) {this.tasklistDetail.done++}
+            if (!h.done) {
+              this.tasklistDetail.count++
+            }
+            if (h.done) {
+              this.tasklistDetail.done++
+            }
           });
           console.log('Get todos success');
-        })
+        },
+        error => console.log('Get todos fail'))
   }
 
 
@@ -78,43 +85,48 @@ export class TodoDetailComponent implements OnInit {
         () => {
           console.log(`Add todos ${newtodo} success`);
           this.getTodos();
-        }
+        },
+        error => console.log(`Add todos ${newtodo} fail`)
       )
   }
 
-  doneTodo(todo_id: number) {
+  updateTodo(todo_id: number) {
     this.tasklistService.updateTodo(this.tasklistDetailId, todo_id)
       .subscribe(
         data => {
           console.log(`Done todo ${todo_id} success`);
           this.getTodos();
-        })
+        },
+        error => console.log(`Done todo ${todo_id} fail`)
+      )
   }
 
-  deleteDone(todo_id: number) {
+  deleteTodo(todo_id: number) {
     this.tasklistService.deleteTodo(this.tasklistDetailId, todo_id)
       .subscribe(
         data => {
           console.log(`Delete todo ${todo_id} success`);
           this.getTodos();
-        })
+        },
+        error => console.log(`Delete todo ${todo_id} fail`)
+      )
   }
 
   doneAllTodos() {
-    for (let i = 0; i < (this.todos.length ); i++) {
-      if (!this.todos[i].done) {
-        this.doneTodo(this.todos[i].id);
+    this.todos.forEach((item) => {
+      if (!item.done) {
+        this.updateTodo(item.id);
       }
-    }
+    });
     console.log('Done all todos');
   }
 
   deleteAllDones() {
-    for (let i = 0; i < (this.todos.length ); i++) {
-      if (this.todos[i].done) {
-        this.deleteDone(this.todos[i].id);
+    this.todos.forEach((item) => {
+      if (item.done) {
+        this.deleteTodo(item.id);
       }
-    }
+    });
     console.log('Delete all dones');
   }
 

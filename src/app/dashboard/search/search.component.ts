@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit {
       .distinctUntilChanged()
       .switchMap(term => term ? this.searchService.searchTodo(term) : Observable.of<TodoSearch[]>([]))
       .catch(error => {
-        console.log(error);
+        console.log('searchTodo fail');
         return Observable.of<TodoSearch[]>([]);
       });
   }

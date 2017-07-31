@@ -4,6 +4,6 @@
   <div *ngFor="let todo of todos | async"
        (click)="gotoDetail(todo)" class="search-result"
         style="cursor: pointer" onmouseover="this.style.color='blue'"
-       onmouseout="this.style.color=''">{{todo.name}}
+       onmouseout="this.style.color=''" attr.id="todo-search{{todo.id}}">{{todo.name}}
   </div>
 </div>

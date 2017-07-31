@@ -10,7 +10,6 @@ import {AlertService, AuthenticationService} from '../_services/index';
 export class LoginComponent implements OnInit {
   userLogin: any = {};
   loading = false;
-  returnUrl: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -20,7 +19,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationService.logout();
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   login() {
@@ -28,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.userLogin.email, this.userLogin.password)
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate(['/']);
         },
         error => {
           this.alertService.error('Email or password is wrong!');

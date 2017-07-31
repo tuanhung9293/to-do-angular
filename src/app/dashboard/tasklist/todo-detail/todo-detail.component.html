@@ -30,7 +30,7 @@
               <div *ngFor="let todo of todos">
                 <div *ngIf="!todo.done" style="margin: 1.5%">
                   <button class="btn btn-info btn-xs"
-                          (click)="doneTodo(todo.id)"
+                          (click)="updateTodo(todo.id)"
                           [disabled]="!tasklistDetail.is_write">Done
                   </button>
                   <span>&nbsp;{{ todo.name }}</span>
@@ -51,7 +51,7 @@
               <div *ngFor="let todo of todos">
                 <div *ngIf="todo.done" style="margin: 1.5%">
                   <button class="btn btn-warning btn-xs"
-                          (click)="deleteDone(todo.id)"
+                          (click)="deleteTodo(todo.id)"
                           [disabled]="!tasklistDetail.is_write">Delete
                   </button>
                   <span>&nbsp;{{todo.name}}</span>

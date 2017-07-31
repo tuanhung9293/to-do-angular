@@ -43,10 +43,6 @@ export class UserService {
   }
 
   getCurrentUser() {
-    return this.currentUser();
-  }
-
-  private currentUser() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     return currentUser.headers['Uid'];
   }

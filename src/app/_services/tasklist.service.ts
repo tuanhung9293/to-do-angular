@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
+import {Http, RequestOptions, Headers} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
-
 
 import {Tasklist} from '../_models';
 import {Todo} from '../_models';
@@ -42,7 +41,7 @@ export class TasklistService {
       .map(
         response => {
           this.authenticationService.extractData(response);
-          return response.json() as Tasklist;
+          return response.json() as Tasklist[];
         })
       .catch(this.authenticationService.handleError);
   }
@@ -87,7 +86,6 @@ export class TasklistService {
       }))
       .map(
         response => {
-          // console.log(this.authenticationService.jwt());
           this.authenticationService.extractData(response);
           return response.json() as any;
         })

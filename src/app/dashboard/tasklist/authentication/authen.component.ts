@@ -16,6 +16,10 @@ export class AuthenComponent implements OnInit {
               private userService: UserService) {
   }
 
+  ngOnInit(): void {
+    this.getUsers();
+  }
+
   getUsers() {
     this.userService.getUsers()
       .subscribe(
@@ -29,7 +33,8 @@ export class AuthenComponent implements OnInit {
               this.users = this.users.filter(h => h.id !== item.user_id);
             })
           }
-        }
+        },
+        error => console.log('Get users fail')
       )
   }
 
@@ -44,7 +49,9 @@ export class AuthenComponent implements OnInit {
 
           this.tasklist.share++;
           this.users = this.users.filter(h => h.id !== user_id);
-        })
+        },
+        error => console.log('Create Authen users fail')
+      )
   }
 
   deleteAuthorizedUser(user_id: number) {
@@ -57,7 +64,9 @@ export class AuthenComponent implements OnInit {
           console.log(`Delete Authen users success`);
 
           this.tasklist.share--
-        })
+        },
+        error => console.log('Delete Authen users fail')
+      )
   }
 
   updateAuthorizedUser(user_id: number) {
@@ -65,12 +74,11 @@ export class AuthenComponent implements OnInit {
     this.tasklistService.updateAuthorizedUser(this.tasklist.id, user_id, !authen_user.is_write)
       .subscribe(
         data => {
+          console.log(authen_user);
           authen_user.is_write = data.is_write;
-          console.log(`Update Authen users ${user_id} is write ${authen_user.is_write} success`);
-        })
-  }
-
-  ngOnInit(): void {
-    this.getUsers();
+          console.log('Update Authen users success');
+        },
+        error => console.log('Update Authen users fail')
+      )
   }
 }

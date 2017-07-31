@@ -2,7 +2,7 @@
   <div class="col-xs-12">
 
     <div class="button-group" style="display:inline-block">
-      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" id="control-share">
         Share All Actions <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>
       <ul class="dropdown-menu">
         <li *ngFor="let user of users | orderBy: 'email': false" style="cursor:pointer"

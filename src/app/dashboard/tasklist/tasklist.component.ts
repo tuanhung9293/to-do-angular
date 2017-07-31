@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-
 import {Tasklist, User} from '../../_models';
 import {TasklistService, UserService} from '../../_services';
 
@@ -18,18 +16,20 @@ export class TasklistComponent implements OnInit {
   public sortOrder = 'asc';
 
   constructor(private tasklistService: TasklistService,
-              private userService: UserService,
-              private router: Router) {
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.getTasklists();
     this.getUsers();
+    this.getTasklists();
   }
 
   getUsers() {
     this.userService.getUsers()
-      .subscribe(data => this.users = data)
+      .subscribe(
+        data => this.users = data,
+        error => console.log('getUsers fail')
+      )
   }
 
   getTasklists() {
@@ -37,17 +37,20 @@ export class TasklistComponent implements OnInit {
       .subscribe(
         data => {
           this.data = data;
+          console.log('Get tasklists success');
           this.data.forEach((item) => {
             item.owner = true;
             item.is_write = true;
             item.user = this.userService.getCurrentUser();
           });
-          console.log('Get tasklists success');
+
           this.data.forEach((item, index) => {
             this.getAuthorizedUsers(item.id, index)
           });
           this.getTasklistsAuthorized();
-        })
+        },
+        error => console.log('getTasklists fail')
+      )
   }
 
   getTasklistsAuthorized() {
@@ -58,8 +61,10 @@ export class TasklistComponent implements OnInit {
             item.user = this.users.filter(h => h.id === item.user_id)[0].email;
           });
           this.data = this.data.concat(data);
-          console.log('Get authen tasklists success');
-        })
+          console.log('getTasklistsAuthorized success');
+        },
+        error => console.log('getTasklistsAuthorized fail')
+      )
   }
 
   getAuthorizedUsers(tasklist_id: number, data_id: number) {
@@ -69,7 +74,9 @@ export class TasklistComponent implements OnInit {
           this.data[data_id].share = data.length;
           this.data[data_id].authorizedUsers = data;
           console.log('Get who authed tasklists success');
-        })
+        },
+        error => console.log('getAuthorizedUsers fail')
+      )
   }
 
   getTasklist(tasklist_id: number) {
@@ -78,7 +85,8 @@ export class TasklistComponent implements OnInit {
         data => {
           this.data.filter(h => h.id === tasklist_id)[0].name = data.name;
           console.log(`Get tasklist ${tasklist_id} success`);
-        }
+        },
+        error => console.log(`Get tasklist ${tasklist_id} fail`)
       )
   }
 
@@ -93,7 +101,8 @@ export class TasklistComponent implements OnInit {
           this.data[this.data.length - 1].user = this.userService.getCurrentUser();
           this.data[this.data.length - 1].authorizedUsers = [];
           console.log('Create tasklist success');
-        }
+        },
+        error => console.log(`Create tasklist fail`)
       )
   }
 
@@ -101,11 +110,20 @@ export class TasklistComponent implements OnInit {
     this.tasklistService.updateTasklist(tasklist_id, tasklist_name)
       .subscribe(
         () => console.log('Rename tasklist success'),
-        () => this.getTasklist(tasklist_id))
+        error => {
+          console.log('Rename tasklist fail');
+          this.getTasklist(tasklist_id);
+        })
   }
 
   deleteTasklist(id: number): void {
     this.tasklistService.deleteTasklist(id)
-      .subscribe(() => this.data = this.data.filter(h => h.id !== id))
+      .subscribe(
+        () => {
+          this.data = this.data.filter(h => h.id !== id);
+          console.log(`Delete tasklist ${id} success`);
+        },
+        error => console.log(`Delete tasklist ${id} fail`)
+      )
   }
 }

@@ -15,8 +15,11 @@ export class SearchService {
   }
 
   searchTodo(term: string): Observable<TodoSearch[]> {
-    return this.http
-      .get(`${PRODUCT.serverURL}/${PRODUCT.searchTodoPATH}/${term}`, this.authenticationService.jwt())
-      .map(response => response.json() as TodoSearch[]);
+    return this.http.get(`${PRODUCT.serverURL}/${PRODUCT.searchTodoPATH}/${term}`, this.authenticationService.jwt())
+      .map(response => {
+        this.authenticationService.extractData(response);
+        return response.json() as TodoSearch[]
+      })
+      .catch(this.authenticationService.handleError)
   }
 }
