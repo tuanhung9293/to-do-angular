@@ -1,14 +1,3 @@
-import { ToDoAngularPage } from './app.po';
+import {testRegisterPage} from './register/register.po';
 
-describe('to-do-angular App', () => {
-  let page: ToDoAngularPage;
-
-  beforeEach(() => {
-    page = new ToDoAngularPage();
-  });
-
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!!');
-  });
-});
+describe('Register Page', testRegisterPage);
