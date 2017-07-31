@@ -1,7 +1,7 @@
 import {browser, by, element} from 'protractor';
 
 export function testDashboardPage() {
-  xit('should display Dashboard', () => {
+  it('should display Dashboard', () => {
     browser.get('/');
     expect(element(by.css('app-dashboard h2')).getText()).toEqual('Manage');
   });
