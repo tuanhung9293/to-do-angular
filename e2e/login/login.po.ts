@@ -1,24 +1,24 @@
 import {browser, by, element} from 'protractor';
 
 export function testLoginPage() {
-  it('should display Login', () => {
+  xit('should display Login', () => {
     browser.get('/login');
     expect(element(by.css('app-login h2')).getText()).toEqual('Login');
   });
 
-  it('should navigate to Login when click "Register"', () => {
+  xit('should navigate to Login when click "Register"', () => {
     let registerButton = element(by.linkText('Register'));
     registerButton.click();
     expect(browser.getCurrentUrl()).toBe('http://localhost:4200/register');
     expect(element(by.css('app-register h2')).getText()).toEqual('Register');
   });
 
-  it('should display /login Url', () => {
+  xit('should display /login Url', () => {
     browser.get('/login');
     expect(browser.getCurrentUrl()).toBe('http://localhost:4200/login');
   });
 
-  it('should show warning Email/Password required', () => {
+  xit('should show warning Email/Password required', () => {
     browser.get('/login');
     element(by.css('app-login input[type=email]')).sendKeys('');
     element(by.css('app-login input[type=password]')).sendKeys('');
