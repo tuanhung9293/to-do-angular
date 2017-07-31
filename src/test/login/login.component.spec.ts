@@ -117,6 +117,34 @@ describe('LoginComponent begin run', () => {
 
       expect(router.navigate).toHaveBeenCalledWith(['/']);
     })));
+
+    it('should set loading = false when login error', fakeAsync(() => {
+      spyOn(authenticationService, 'login')
+        .and.returnValue(Observable.throw({status: 400}));
+      spyOn(authenticationService, 'jwt')
+        .and.returnValue('run success');
+      spyOn(alertService, 'error')
+        .and.returnValue('run success');
+      component.login();
+
+      tick();
+      fixture.detectChanges();
+      expect(component.loading).toBeFalsy();
+    }));
+
+    it('should run  alertService.error when login error', fakeAsync(() => {
+      spyOn(authenticationService, 'login')
+        .and.returnValue(Observable.throw({status: 400}));
+      spyOn(authenticationService, 'jwt')
+        .and.returnValue('run success');
+      spyOn(alertService, 'error')
+        .and.returnValue('run success');
+      component.login();
+
+      tick();
+      fixture.detectChanges();
+      expect(alertService.error).toHaveBeenCalled();
+    }));
   });
 
 });

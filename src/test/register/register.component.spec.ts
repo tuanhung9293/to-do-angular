@@ -64,9 +64,6 @@ describe('Testing Register Component', () => {
     alertService = TestBed.get(AlertService);
     authenticationService = TestBed.get(AuthenticationService);
 
-    spyOn(userService, 'createUser')
-      .and.returnValue(Observable.of('Success'));
-
     spyOn(alertService, 'success')
       .and.returnValue('thanh cong');
 
@@ -75,23 +72,31 @@ describe('Testing Register Component', () => {
   });
 
   it('should render component', fakeAsync(() => {
+    spyOn(userService, 'createUser')
+      .and.returnValue(Observable.of('Success'));
     component.register();
+
     tick();
     fixture.detectChanges();
     const el = de.query(By.css('h2')).nativeElement;
     expect(el.textContent).toEqual('Register');
   }));
 
-  it('should compile [routerLink] to /login url ',
-    async(() => {
-      fixture.detectChanges();
-      let href = de.query(By.css('#login-route')).nativeElement.getAttribute('href');
-      fixture.whenStable().then(() => {
-        expect(href).toEqual('/login');
-      });
-    }));
+  it('should compile [routerLink] to /login url ', async(() => {
+    spyOn(userService, 'createUser')
+      .and.returnValue(Observable.of('Success'));
+
+    fixture.detectChanges();
+    let href = de.query(By.css('#login-route')).nativeElement.getAttribute('href');
+    fixture.whenStable().then(() => {
+      expect(href).toEqual('/login');
+    });
+  }));
 
   it('should navigate /login url', fakeAsync(inject([Router], (router) => {
+    spyOn(userService, 'createUser')
+      .and.returnValue(Observable.of('Success'));
+
     spyOn(router, 'navigate');
     component.register();
     tick();
@@ -99,6 +104,29 @@ describe('Testing Register Component', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
   })));
 
+  it('should set loading = false when register() error', fakeAsync(() => {
+    spyOn(userService, 'createUser')
+      .and.returnValue(Observable.throw({status: 400}));
+    spyOn(alertService, 'error')
+      .and.returnValue('run success');
+    component.register();
+
+    tick();
+    fixture.detectChanges();
+    expect(component.loading).toBeFalsy();
+  }));
+
+  it('should run  alertService.error when register() error', fakeAsync(() => {
+    spyOn(userService, 'createUser')
+      .and.returnValue(Observable.throw({status: 400}));
+    spyOn(alertService, 'error')
+      .and.returnValue('run success');
+    component.register();
+
+    tick();
+    fixture.detectChanges();
+    expect(alertService.error).toHaveBeenCalled();
+  }));
 });
 
 
