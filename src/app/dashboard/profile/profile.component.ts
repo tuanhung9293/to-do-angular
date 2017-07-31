@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
           this.alertService.success('Change password success', true);
         },
         error => {
-          this.alertService.error(error);
+          this.alertService.error('Change password fail');
         })
   }
 }
